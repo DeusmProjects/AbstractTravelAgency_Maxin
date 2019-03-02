@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{673C0CF0-C55C-4F52-BA83-2A433A0BD94F}</ProjectGuid>
+    <ProjectGuid>{0AD73B55-01A2-43E8-A911-994FC2DBC167}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AbstractTravelAgencyModel</RootNamespace>
-    <AssemblyName>AbstractTravelAgencyModel</AssemblyName>
+    <RootNamespace>AbstractTravelAgencyServiceDAL</RootNamespace>
+    <AssemblyName>AbstractTravelAgencyServiceDAL</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,13 +41,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Customer.cs" />
-    <Compile Include="Condition.cs" />
-    <Compile Include="Booking.cs" />
-    <Compile Include="BookingStatus.cs" />
+    <Compile Include="BindingModel\CustomerBindingModel.cs" />
+    <Compile Include="BindingModel\ConditionBindingModel.cs" />
+    <Compile Include="BindingModel\BookingBindingModel.cs" />
+    <Compile Include="BindingModel\BookingStatusBindingModel.cs" />
+    <Compile Include="BindingModel\VoucherBindingModel.cs" />
+    <Compile Include="BindingModel\VoucherConditionBindingModel.cs" />
+    <Compile Include="Interfaces\ICustomerService.cs" />
+    <Compile Include="Interfaces\IConditionService.cs" />
+    <Compile Include="Interfaces\IMainService.cs" />
+    <Compile Include="Interfaces\IVoucherService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Voucher.cs" />
-    <Compile Include="VoucherCondition.cs" />
+    <Compile Include="ViewModel\CustomerViewModel.cs" />
+    <Compile Include="ViewModel\ConditionViewModel.cs" />
+    <Compile Include="ViewModel\BookingStatusViewModel.cs" />
+    <Compile Include="ViewModel\BookingViewModel.cs" />
+    <Compile Include="ViewModel\VoucherViewModel.cs" />
+    <Compile Include="ViewModel\VoucherConditionViewModel.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AbstractTravelAgencyModel\AbstractTravelAgencyModel.csproj">
+      <Project>{673c0cf0-c55c-4f52-ba83-2a433a0bd94f}</Project>
+      <Name>AbstractTravelAgencyModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
