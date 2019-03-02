@@ -44,7 +44,6 @@
     <Compile Include="BindingModel\CustomerBindingModel.cs" />
     <Compile Include="BindingModel\ConditionBindingModel.cs" />
     <Compile Include="BindingModel\BookingBindingModel.cs" />
-    <Compile Include="BindingModel\BookingStatusBindingModel.cs" />
     <Compile Include="BindingModel\VoucherBindingModel.cs" />
     <Compile Include="BindingModel\VoucherConditionBindingModel.cs" />
     <Compile Include="Interfaces\ICustomerService.cs" />
@@ -54,7 +53,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\CustomerViewModel.cs" />
     <Compile Include="ViewModel\ConditionViewModel.cs" />
-    <Compile Include="ViewModel\BookingStatusViewModel.cs" />
     <Compile Include="ViewModel\BookingViewModel.cs" />
     <Compile Include="ViewModel\VoucherViewModel.cs" />
     <Compile Include="ViewModel\VoucherConditionViewModel.cs" />
