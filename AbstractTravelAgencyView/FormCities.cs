@@ -1,5 +1,6 @@
 ﻿using AbstractTravelAgencyModel;
 using AbstractTravelAgencyServiceDAL.Interfaces;
+using AbstractTravelAgencyServiceDAL.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,19 +14,19 @@ using Unity;
 
 namespace AbstractTravelAgencyView
 {
-    public partial class FormCustomers : Form
+    public partial class FormCities : Form
     {
         [Dependency]
         public new IUnityContainer Container { get; set; }
-        private readonly ICustomerService service;
+        private readonly ICityService service;
 
-        public FormCustomers(ICustomerService service)
+        public FormCities(ICityService service)
         {
             InitializeComponent();
             this.service = service;
         }
 
-        private void FormCustomers_Load(object sender, EventArgs e)
+        private void FormCities_Load(object sender, EventArgs e)
         {
             LoadData();
         }
@@ -34,7 +35,7 @@ namespace AbstractTravelAgencyView
         {
             try
             {
-                List<CustomerViewModel> list = service.GetList();
+                List<CityViewModel> list = service.GetList();
                 if (list != null)
                 {
                     dataGridView.DataSource = list;
@@ -52,16 +53,13 @@ namespace AbstractTravelAgencyView
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormCustomer>();
+            var form = Container.Resolve<FormCity>();
             if (form.ShowDialog() == DialogResult.OK)
             {
                 LoadData();
             }
         }
-        private void buttonUpdate_Click(object sender, EventArgs e)
-        {
-            LoadData();
-        }
+
         private void buttonDelete_Click(object sender, EventArgs e)
         {
             if (dataGridView.SelectedRows.Count == 1)
@@ -89,13 +87,18 @@ namespace AbstractTravelAgencyView
         {
             if (dataGridView.SelectedRows.Count == 1)
             {
-                var form = Container.Resolve<FormCustomer>();
+                var form = Container.Resolve<FormCity>();
                 form.Id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                 if (form.ShowDialog() == DialogResult.OK)
                 {
                     LoadData();
                 }
             }
+        }
+
+        private void buttonUpdate_Click(object sender, EventArgs e)
+        {
+            LoadData();
         }
     }
 }

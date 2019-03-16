@@ -41,16 +41,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BindingModel\CityBindingModel.cs" />
+    <Compile Include="BindingModel\CityConditionBindingModel.cs" />
     <Compile Include="BindingModel\CustomerBindingModel.cs" />
     <Compile Include="BindingModel\ConditionBindingModel.cs" />
     <Compile Include="BindingModel\BookingBindingModel.cs" />
     <Compile Include="BindingModel\VoucherBindingModel.cs" />
     <Compile Include="BindingModel\VoucherConditionBindingModel.cs" />
+    <Compile Include="Interfaces\ICityService.cs" />
     <Compile Include="Interfaces\ICustomerService.cs" />
     <Compile Include="Interfaces\IConditionService.cs" />
     <Compile Include="Interfaces\IMainService.cs" />
     <Compile Include="Interfaces\IVoucherService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\CityConditionViewModel.cs" />
+    <Compile Include="ViewModel\CityViewModel.cs" />
     <Compile Include="ViewModel\CustomerViewModel.cs" />
     <Compile Include="ViewModel\ConditionViewModel.cs" />
     <Compile Include="ViewModel\BookingViewModel.cs" />

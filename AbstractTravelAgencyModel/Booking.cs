@@ -14,7 +14,7 @@ namespace AbstractTravelAgencyModel
         public int Amount { get; set; }
         public decimal TotalSum { get; set; }
         public BookingStatus StatusBooking { get; set; }
-        public DateTime DataCreateBooking { get; set; }
+        public DateTime DateCreateBooking { get; set; }
         public DateTime? DateImplementBooking { get; set; }
     }
 }

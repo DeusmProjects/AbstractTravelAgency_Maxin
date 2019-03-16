@@ -21,130 +21,135 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
 
         public List<BookingViewModel> GetList()
         {
-            List<BookingViewModel> result = new List<BookingViewModel>();
-            for (int i = 0; i < source.Bookings.Count; ++i)
-            {
-                string clientFIO = string.Empty;
-                for (int j = 0; j < source.Customers.Count; ++j)
-                {
-                    if (source.Customers[j].Id == source.Bookings[i].CustomerId)
-                    {
-                        clientFIO = source.Customers[j].CustomerFIO;
-                        break;
-                    }
-                }
-                string voucherName = string.Empty;
-                for (int j = 0; j < source.Vouchers.Count; ++j)
-                {
-                    if (source.Vouchers[j].Id == source.Bookings[i].VoucherId)
-                    {
-                        voucherName = source.Vouchers[j].VoucherName;
-                        break;
-                    }
-                }
-                result.Add(new BookingViewModel
-                {
-                    Id = source.Bookings[i].Id,
-                    CustomerId = source.Bookings[i].CustomerId,
-                    CustomerFIO = clientFIO,
-                    VoucherId = source.Bookings[i].VoucherId,
-                    VoucherName = voucherName,
-                    Amount = source.Bookings[i].Amount,
-                    TotalSum = source.Bookings[i].TotalSum,
-                    DateCreateBooking = source.Bookings[i].DataCreateBooking.ToLongDateString(),
-                    DateImplementBooking = source.Bookings[i].DateImplementBooking?.ToLongDateString(),
-                    StatusBooking = source.Bookings[i].StatusBooking.ToString()
-                });
-            }
+            List<BookingViewModel> result = source.Bookings
+             .Select(rec => new BookingViewModel
+             {
+                 Id = rec.Id,
+                 CustomerId = rec.CustomerId,
+                 VoucherId = rec.VoucherId,
+                 DateCreateBooking = rec.DateCreateBooking.ToLongDateString(),
+                 DateImplementBooking = rec.DateImplementBooking?.ToLongDateString(),
+                 StatusBooking = rec.StatusBooking.ToString(),
+                 Amount = rec.Amount,
+                 TotalSum = rec.TotalSum,
+                 CustomerFIO = source.Customers.FirstOrDefault(recC => recC.Id == rec.CustomerId)?.CustomerFIO,
+                 VoucherName = source.Vouchers.FirstOrDefault(recP => recP.Id == rec.VoucherId)?.VoucherName,
+             })
+             .ToList();
             return result;
         }
 
         public void CreateBooking(BookingBindingModel model)
         {
-            int maxId = 0;
-            for (int i = 0; i < source.Bookings.Count; ++i)
-            {
-                if (source.Bookings[i].Id > maxId)
-                {
-                    maxId = source.Customers[i].Id;
-                }
-            }
+            int maxId = source.Bookings.Count > 0 ? source.Bookings.Max(rec => rec.Id) : 0;
             source.Bookings.Add(new Booking
             {
                 Id = maxId + 1,
                 CustomerId = model.CustomerId,
                 VoucherId = model.VoucherId,
-                DataCreateBooking = DateTime.Now,
+                DateCreateBooking = DateTime.Now,
                 Amount = model.Amount,
                 TotalSum = model.TotalSum,
                 StatusBooking = BookingStatus.Принят
             });
+
         }
         public void TakeBookingInWork(BookingBindingModel model)
         {
-            int index = -1;
-            for (int i = 0; i < source.Bookings.Count; ++i)
-            {
-                if (source.Bookings[i].Id == model.Id)
-                {
-                    index = i;
-                    break;
-                }
-            }
-            if (index == -1)
+            Booking element = source.Bookings.FirstOrDefault(rec => rec.Id == model.Id);
+            if (element == null)
             {
                 throw new Exception("Элемент не найден");
             }
-            if (source.Bookings[index].StatusBooking != BookingStatus.Принят)
+            if (element.StatusBooking != BookingStatus.Принят)
             {
                 throw new Exception("Заказ не в статусе \"Принят\"");
             }
-            source.Bookings[index].DateImplementBooking = DateTime.Now;
-            source.Bookings[index].StatusBooking = BookingStatus.Выполняется;
+            var voucherConditions = source.VoucherConditions.Where(rec => rec.VoucherId == element.VoucherId);
+
+            foreach (var voucherCondition in voucherConditions)
+            {
+                int countOnCities = source.CityConditions.Where(rec => rec.ConditionId == voucherCondition.ConditionId)
+               .Sum(rec => rec.Amount);
+                if (countOnCities < voucherCondition.Amount * element.Amount)
+                {
+                    var conditionName = source.Conditions.FirstOrDefault(rec => rec.Id == voucherCondition.ConditionId);
+                    throw new Exception("Не достаточно условий " +
+                   conditionName?.ConditionName + " требуется " + (voucherCondition.Amount * element.Amount) +
+                   ", в наличии " + countOnCities);
+                }
+            }
+            // списываем
+            foreach (var voucherCondition in voucherConditions)
+            {
+                int countOnCities = voucherCondition.Amount * element.Amount;
+                var cityConditions = source.CityConditions.Where(rec => rec.ConditionId == voucherCondition.ConditionId);
+                foreach (var cityCondition in cityConditions)
+                {
+                    if (cityCondition.Amount >= countOnCities)
+                    {
+                        cityCondition.Amount -= countOnCities;
+                        break;
+                    }
+                    else
+                    {
+                        countOnCities -= cityCondition.Amount;
+                        cityCondition.Amount = 0;
+                    }
+                }
+            }
+
+            element.DateImplementBooking = DateTime.Now;
+            element.StatusBooking = BookingStatus.Выполняется;
         }
 
         public void FinishBooking(BookingBindingModel model)
         {
-            int index = -1;
-            for (int i = 0; i < source.Bookings.Count; ++i)
-            {
-                if (source.Customers[i].Id == model.Id)
-                {
-                    index = i;
-                    break;
-                }
-            }
-            if (index == -1)
+            Booking element = source.Bookings.FirstOrDefault(rec => rec.Id == model.Id);
+            if (element == null)
             {
                 throw new Exception("Элемент не найден");
             }
-            if (source.Bookings[index].StatusBooking != BookingStatus.Выполняется)
+            if (element.StatusBooking != BookingStatus.Выполняется)
             {
                 throw new Exception("Заказ не в статусе \"Выполняется\"");
             }
-            source.Bookings[index].StatusBooking = BookingStatus.Готов;
+            element.StatusBooking = BookingStatus.Готов;
         }
 
         public void PayBooking(BookingBindingModel model)
         {
-            int index = -1;
-            for (int i = 0; i < source.Bookings.Count; ++i)
-            {
-                if (source.Customers[i].Id == model.Id)
-                {
-                    index = i;
-                    break;
-                }
-            }
-            if (index == -1)
+            Booking element = source.Bookings.FirstOrDefault(rec => rec.Id == model.Id);
+            if (element == null)
             {
                 throw new Exception("Элемент не найден");
             }
-            if (source.Bookings[index].StatusBooking != BookingStatus.Готов)
+            if (element.StatusBooking != BookingStatus.Готов)
             {
                 throw new Exception("Заказ не в статусе \"Готов\"");
             }
-            source.Bookings[index].StatusBooking = BookingStatus.Оплачен;
+            element.StatusBooking = BookingStatus.Оплачен;
+        }
+
+        public void PutConditionOnCity(CityConditionBindingModel model)
+        {
+            CityCondition element = source.CityConditions.FirstOrDefault(rec =>
+           rec.CityId == model.CityId && rec.ConditionId == model.ConditionId);
+            if (element != null)
+            {
+                element.Amount += model.Amount;
+            }
+            else
+            {
+                int maxId = source.CityConditions.Count > 0 ? source.CityConditions.Max(rec => rec.Id) : 0;
+                source.CityConditions.Add(new CityCondition
+                {
+                    Id = ++maxId,
+                    CityId = model.CityId,
+                    ConditionId = model.ConditionId,
+                    Amount = model.Amount
+                });
+            }
         }
     }
 }
