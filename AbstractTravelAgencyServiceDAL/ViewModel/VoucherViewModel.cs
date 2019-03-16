@@ -18,7 +18,6 @@ namespace AbstractTravelAgencyModel
         [DisplayName("Цена")]
         public decimal Cost { get; set; }
 
-        public List<VoucherConditionViewModel> VoucherConditions { get; set; }
         public List<VoucherConditionViewModel> VoucherCondition { get; set; }
     }
 }

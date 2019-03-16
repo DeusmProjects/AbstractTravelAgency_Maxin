@@ -50,7 +50,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
                     Id = source.Vouchers[i].Id,
                     VoucherName = source.Vouchers[i].VoucherName,
                     Cost = source.Vouchers[i].Cost,
-                    VoucherConditions = voucherConditions
+                    VoucherCondition = voucherConditions
                 });
             }
             return result;
@@ -90,7 +90,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
                         Id = source.Vouchers[i].Id,
                         VoucherName = source.Vouchers[i].VoucherName,
                         Cost = source.Vouchers[i].Cost,
-                        VoucherConditions = voucherConditions
+                        VoucherCondition = voucherConditions
                     };
                 }
             }

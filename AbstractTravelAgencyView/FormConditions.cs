@@ -84,11 +84,6 @@ namespace AbstractTravelAgencyView
 
         private void buttonChange_Click(object sender, EventArgs e)
         {
-            LoadData();
-        }
-
-        private void buttonUpdate_Click(object sender, EventArgs e)
-        {
             if (dataGridView.SelectedRows.Count == 1)
             {
                 var form = Container.Resolve<FormCondition>();
@@ -98,6 +93,11 @@ namespace AbstractTravelAgencyView
                     LoadData();
                 }
             }
+        }
+
+        private void buttonUpdate_Click(object sender, EventArgs e)
+        {
+            LoadData();
         }
     }
 }
