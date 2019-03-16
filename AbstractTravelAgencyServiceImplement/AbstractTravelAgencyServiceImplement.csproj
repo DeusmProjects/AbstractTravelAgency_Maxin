@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataListSingleton.cs" />
+    <Compile Include="Implementations\CityServiceList.cs" />
     <Compile Include="Implementations\CustomerServiceList.cs" />
     <Compile Include="Implementations\ConditionServiceList.cs" />
     <Compile Include="Implementations\MainServiceList.cs" />

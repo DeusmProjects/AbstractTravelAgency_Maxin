@@ -33,6 +33,8 @@
             this.клиентыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.условияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.путевкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.городаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.пополнитьГородToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
             this.buttonTakeOrderInWork = new System.Windows.Forms.Button();
@@ -47,7 +49,8 @@
             // 
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.справочникToolStripMenuItem});
+            this.справочникToolStripMenuItem,
+            this.пополнитьГородToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1294, 28);
@@ -59,7 +62,8 @@
             this.справочникToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.клиентыToolStripMenuItem,
             this.условияToolStripMenuItem,
-            this.путевкиToolStripMenuItem});
+            this.путевкиToolStripMenuItem,
+            this.городаToolStripMenuItem});
             this.справочникToolStripMenuItem.Name = "справочникToolStripMenuItem";
             this.справочникToolStripMenuItem.Size = new System.Drawing.Size(106, 24);
             this.справочникToolStripMenuItem.Text = "Справочник";
@@ -84,6 +88,20 @@
             this.путевкиToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
             this.путевкиToolStripMenuItem.Text = "Путевки";
             this.путевкиToolStripMenuItem.Click += new System.EventHandler(this.изделияToolStripMenuItem_Click);
+            // 
+            // городаToolStripMenuItem
+            // 
+            this.городаToolStripMenuItem.Name = "городаToolStripMenuItem";
+            this.городаToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.городаToolStripMenuItem.Text = "Города";
+            this.городаToolStripMenuItem.Click += new System.EventHandler(this.городаToolStripMenuItem_Click);
+            // 
+            // пополнитьГородToolStripMenuItem
+            // 
+            this.пополнитьГородToolStripMenuItem.Name = "пополнитьГородToolStripMenuItem";
+            this.пополнитьГородToolStripMenuItem.Size = new System.Drawing.Size(144, 24);
+            this.пополнитьГородToolStripMenuItem.Text = "Пополнить город";
+            this.пополнитьГородToolStripMenuItem.Click += new System.EventHandler(this.пополнитьГородToolStripMenuItem_Click);
             // 
             // dataGridView
             // 
@@ -180,6 +198,8 @@
         private System.Windows.Forms.Button buttonOrderReady;
         private System.Windows.Forms.Button buttonPayOrder;
         private System.Windows.Forms.Button buttonUpdate;
+        private System.Windows.Forms.ToolStripMenuItem городаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem пополнитьГородToolStripMenuItem;
     }
 }
 

@@ -61,6 +61,19 @@ namespace AbstractTravelAgencyView
             var form = Container.Resolve<FormVouchers>();
             form.ShowDialog();
         }
+
+        private void городаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormCities>();
+            form.ShowDialog();
+        }
+
+        private void пополнитьГородToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormPutOnCity>();
+            form.ShowDialog();
+        }
+
         private void buttonCreateOrder_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormCreateBooking>();
