@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AbstractTravelAgencyService
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AbstractTravelAgencyView", "AbstractTravelAgencyView\AbstractTravelAgencyView.csproj", "{5B9C4254-96B6-4D48-95AF-3F3EE01443E2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AbstractTravelAgencyServiceImplementDataBase", "AbstractTravelAgencyServiceImplementDataBase\AbstractTravelAgencyServiceImplementDataBase.csproj", "{15C51FDE-95CC-4D98-8445-F8ACCF37E5EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{5B9C4254-96B6-4D48-95AF-3F3EE01443E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B9C4254-96B6-4D48-95AF-3F3EE01443E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B9C4254-96B6-4D48-95AF-3F3EE01443E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15C51FDE-95CC-4D98-8445-F8ACCF37E5EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15C51FDE-95CC-4D98-8445-F8ACCF37E5EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15C51FDE-95CC-4D98-8445-F8ACCF37E5EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15C51FDE-95CC-4D98-8445-F8ACCF37E5EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
