@@ -1,4 +1,5 @@
-﻿using AbstractTravelAgencyServiceDAL.BindingModel;
+﻿using AbstractTravelAgencyModel;
+using AbstractTravelAgencyServiceDAL.BindingModel;
 using AbstractTravelAgencyServiceDAL.Interfaces;
 using System;
 using System.Collections.Generic;
