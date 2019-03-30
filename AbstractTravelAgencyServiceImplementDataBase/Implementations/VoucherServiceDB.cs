@@ -1,5 +1,6 @@
 ﻿using AbstractTravelAgencyModel;
 using AbstractTravelAgencyServiceDAL.BindingModel;
+using AbstractTravelAgencyServiceDAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
 {
-    class VoucherServiceDB
+    public class VoucherServiceDB : IVoucherService
     {
         private AbstractDbScope context;
         public VoucherServiceDB(AbstractDbScope context)
@@ -29,7 +30,7 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
                    Id = recPC.Id,
                    VoucherId = recPC.VoucherId,
                    ConditionId = recPC.ConditionId,
-                   ConditionName = recPC.Conditions.ConditionName,
+                   ConditionName = recPC.Condition.ConditionName,
                    Amount = recPC.Amount
                })
            .ToList()
@@ -54,7 +55,7 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
                          Id = recPC.Id,
                          VoucherId = recPC.VoucherId,
                          ConditionId = recPC.ConditionId,
-                         ConditionName = recPC.Conditions.ConditionName,
+                         ConditionName = recPC.Condition.ConditionName,
                          Amount = recPC.Amount
                      })
                      .ToList()
@@ -72,7 +73,7 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
                    rec.VoucherName == model.VoucherName);
                     if (element != null)
                     {
-                        throw new Exception("Уже есть изделие с таким названием");
+                        throw new Exception("Уже есть путевка с таким названием");
                     }
                     element = new Voucher
                     {
@@ -119,7 +120,7 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
                    rec.VoucherName == model.VoucherName && rec.Id != model.Id);
                     if (element != null)
                     {
-                        throw new Exception("Уже есть изделие с таким названием");
+                        throw new Exception("Уже есть путевка с таким названием");
                     }
                     element = context.Vouchers.FirstOrDefault(rec => rec.Id == model.Id);
                     if (element == null)

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AbstractTravelAgencyServiceImplementDataBase
 {
-    class AbstractDbScope : DbContext
+    public class AbstractDbScope : DbContext
     {
         public AbstractDbScope() : base("AbstractDatabase")
         {
@@ -22,6 +22,7 @@ namespace AbstractTravelAgencyServiceImplementDataBase
         public virtual DbSet<Voucher> Vouchers { get; set; }
         public virtual DbSet<VoucherCondition> VoucherConditions { get; set; }
         public virtual DbSet<City> Cities { get; set; }
-        public virtual DbSet<CityCondition> CityConditions { get; set; }
+        public virtual DbSet<CityCondition> CityConditions { get; set; }
+
     }
 }

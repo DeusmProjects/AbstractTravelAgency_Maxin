@@ -1,5 +1,6 @@
 ﻿using AbstractTravelAgencyModel;
 using AbstractTravelAgencyServiceDAL.BindingModel;
+using AbstractTravelAgencyServiceDAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
 {
-    class CustomerServiceDB
+    public class CustomerServiceDB : ICustomerService
     {
         private AbstractDbScope context;
         public CustomerServiceDB(AbstractDbScope context)
@@ -81,6 +82,7 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
             {
                 throw new Exception("Элемент не найден");
             }
-        }
+        }
+
     }
 }
