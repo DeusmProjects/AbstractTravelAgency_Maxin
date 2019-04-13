@@ -18,7 +18,7 @@ namespace AbstractTravelAgencyServiceDAL.ViewModel
 
         public int VoucherId { get; set; }
 
-        [DisplayName("Продукт")]
+        [DisplayName("Путевка")]
         public string VoucherName { get; set; }
 
         [DisplayName("Количество")]

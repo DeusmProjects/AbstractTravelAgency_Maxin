@@ -156,7 +156,8 @@ namespace AbstractTravelAgencyView
                     MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
                    MessageBoxIcon.Error);
                 }
-            }
+            }
+
         }
 
         private void загруженностьГородовToolStripMenuItem_Click(object sender, EventArgs e)
@@ -168,7 +169,8 @@ namespace AbstractTravelAgencyView
         private void заказыКлиентовToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormCustomerBookings>();
-            form.ShowDialog();
+            form.ShowDialog();
+
         }
     }
 }
