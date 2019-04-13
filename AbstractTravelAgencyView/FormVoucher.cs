@@ -10,14 +10,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Unity;
 
 namespace AbstractTravelAgencyView
 {
     public partial class FormVoucher : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
         public int Id { set { id = value; } }
         private readonly IVoucherService service;
         private int? id;

@@ -4,28 +4,22 @@ using AbstractTravelAgencyServiceDAL.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Unity;
 
 namespace AbstractTravelAgencyView
 {
     public partial class FormMain : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-        private readonly IMainService service;
-        private IReportService reportService;
-
-        public FormMain(IMainService service, IReportService reportService)
+        public FormMain()
         {
             InitializeComponent();
-            this.service = service;
-            this.reportService = reportService;
         }
+
         private void LoadData()
         {
             try
             {
-                List<BookingViewModel> list = service.GetList();
+                List<BookingViewModel> list =
+               APIClient.GetRequest<List<BookingViewModel>>("api/Main/GetList");
                 if (list != null)
                 {
                     dataGridView.DataSource = list;
@@ -45,46 +39,47 @@ namespace AbstractTravelAgencyView
         }
         private void клиентыToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormCustomers>();
+            var form = new FormCustomers();
             form.ShowDialog();
         }
         private void компонентыToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormConditions>();
+            var form = new FormConditions();
             form.ShowDialog();
         }
         private void изделияToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormVouchers>();
+            var form = new FormVouchers();
             form.ShowDialog();
         }
-
-        private void городаToolStripMenuItem_Click(object sender, EventArgs e)
+        private void складыToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormCities>();
+            var form = new FormCities();
             form.ShowDialog();
         }
-
-        private void пополнитьГородToolStripMenuItem_Click(object sender, EventArgs e)
+        private void пополнитьСкладToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormPutOnCity>();
+            var form = new FormPutOnCity();
             form.ShowDialog();
         }
-
-        private void buttonCreateOrder_Click(object sender, EventArgs e)
+        private void buttonCreateBooking_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormCreateBooking>();
+            var form = new FormCreateBooking();
             form.ShowDialog();
             LoadData();
         }
-        private void buttonTakeOrderInWork_Click(object sender, EventArgs e)
+        private void buttonTakeBookingInWork_Click(object sender, EventArgs e)
         {
             if (dataGridView.SelectedRows.Count == 1)
             {
                 int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                 try
                 {
-                    service.TakeBookingInWork(new BookingBindingModel { Id = id });
+                    APIClient.PostRequest<BookingBindingModel,
+                   bool>("api/Main/TakeBookingInWork", new BookingBindingModel
+                   {
+                       Id = id
+                   });
                     LoadData();
                 }
                 catch (Exception ex)
@@ -94,15 +89,18 @@ namespace AbstractTravelAgencyView
                 }
             }
         }
-
-        private void buttonOrderReady_Click(object sender, EventArgs e)
+        private void buttonBookingReady_Click(object sender, EventArgs e)
         {
             if (dataGridView.SelectedRows.Count == 1)
             {
                 int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                 try
                 {
-                    service.FinishBooking(new BookingBindingModel { Id = id });
+                    APIClient.PostRequest<BookingBindingModel,
+                   bool>("api/Main/FinishBooking", new BookingBindingModel
+                   {
+                       Id = id
+                   });
                     LoadData();
                 }
                 catch (Exception ex)
@@ -112,65 +110,66 @@ namespace AbstractTravelAgencyView
                 }
             }
         }
-        private void buttonPayOrder_Click(object sender, EventArgs e)
-        {
-            if (dataGridView.SelectedRows.Count == 1)
+            private void buttonPayBooking_Click(object sender, EventArgs e)
             {
-                int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
-                try
+                if (dataGridView.SelectedRows.Count == 1)
                 {
-                    service.PayBooking(new BookingBindingModel { Id = id });
-                    LoadData();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                   MessageBoxIcon.Error);
-                }
-            }
-        }
-        private void buttonUpdate_Click(object sender, EventArgs e)
-        {
-            LoadData();
-        }
-
-        private void прайсПутевокToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog sfd = new SaveFileDialog
-            {
-                Filter = "doc|*.doc|docx|*.docx"
-            };
-            if (sfd.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    reportService.SaveVoucherCost(new ReportBindingModel
+                    int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
+                    try
                     {
-                        FileName = sfd.FileName
-                    });
-                    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                   MessageBoxIcon.Error);
+                        APIClient.PostRequest<BookingBindingModel, bool>("api/Main/.PayBooking",
+                       new BookingBindingModel
+                       {
+                           Id = id
+                       });
+                        LoadData();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
+                       MessageBoxIcon.Error);
+                    }
                 }
             }
-
+            private void buttonRef_Click(object sender, EventArgs e)
+            {
+                LoadData();
+            }
+            private void прайсИзделийToolStripMenuItem_Click(object sender, EventArgs e)
+            {
+                SaveFileDialog sfd = new SaveFileDialog
+                {
+                    Filter = "doc|*.doc|docx|*.docx"
+                };
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        APIClient.PostRequest<ReportBindingModel,
+                       bool>("api/Report/SaveVoucherPrice", new ReportBindingModel
+                       {
+                           FileName = sfd.FileName
+                       });
+                        MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
+                       MessageBoxIcon.Error);
+                    }
+                }
+            }
+            private void загруженностьСкладовToolStripMenuItem_Click(object sender, EventArgs e)
+            {
+                var form = new FormCitiesLoad();
+                form.ShowDialog();
+            }
+            private void заказыКлиентовToolStripMenuItem_Click(object sender, EventArgs e)
+            {
+                var form = new FormCustomerBookings();
+                form.ShowDialog();
+            }
         }
 
-        private void загруженностьГородовToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var form = Container.Resolve<FormCitiesLoad>();
-            form.ShowDialog();
-        }
-
-        private void заказыКлиентовToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var form = Container.Resolve<FormCustomerBookings>();
-            form.ShowDialog();
-
-        }
-    }
 }
