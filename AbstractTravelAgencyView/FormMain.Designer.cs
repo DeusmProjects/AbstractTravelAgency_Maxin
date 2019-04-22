@@ -92,7 +92,7 @@
             this.путевкиToolStripMenuItem.Name = "путевкиToolStripMenuItem";
             this.путевкиToolStripMenuItem.Size = new System.Drawing.Size(155, 26);
             this.путевкиToolStripMenuItem.Text = "Путевки";
-            this.путевкиToolStripMenuItem.Click += new System.EventHandler(this.изделияToolStripMenuItem_Click);
+            this.путевкиToolStripMenuItem.Click += new System.EventHandler(this.путевкиToolStripMenuItem_Click);
             // 
             // городаToolStripMenuItem
             // 
@@ -156,7 +156,7 @@
             this.button1.TabIndex = 2;
             this.button1.Text = "Заказать бронь";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.buttonCreateOrder_Click);
+            this.button1.Click += new System.EventHandler(this.buttonCreateBooking_Click);
             // 
             // buttonTakeOrderInWork
             // 
@@ -166,7 +166,7 @@
             this.buttonTakeOrderInWork.TabIndex = 3;
             this.buttonTakeOrderInWork.Text = "Отдать заказ на выполнение";
             this.buttonTakeOrderInWork.UseVisualStyleBackColor = true;
-            this.buttonTakeOrderInWork.Click += new System.EventHandler(this.buttonTakeOrderInWork_Click);
+            this.buttonTakeOrderInWork.Click += new System.EventHandler(this.buttonTakeBookingInWork_Click);
             // 
             // buttonOrderReady
             // 
@@ -176,7 +176,7 @@
             this.buttonOrderReady.TabIndex = 4;
             this.buttonOrderReady.Text = "Бронь готова";
             this.buttonOrderReady.UseVisualStyleBackColor = true;
-            this.buttonOrderReady.Click += new System.EventHandler(this.buttonOrderReady_Click);
+            this.buttonOrderReady.Click += new System.EventHandler(this.buttonBookingReady_Click);
             // 
             // buttonPayOrder
             // 
@@ -186,7 +186,7 @@
             this.buttonPayOrder.TabIndex = 5;
             this.buttonPayOrder.Text = "Бронь оплачена";
             this.buttonPayOrder.UseVisualStyleBackColor = true;
-            this.buttonPayOrder.Click += new System.EventHandler(this.buttonPayOrder_Click);
+            this.buttonPayOrder.Click += new System.EventHandler(this.buttonPayBooking_Click);
             // 
             // buttonUpdate
             // 
@@ -196,7 +196,7 @@
             this.buttonUpdate.TabIndex = 6;
             this.buttonUpdate.Text = "Обновить список";
             this.buttonUpdate.UseVisualStyleBackColor = true;
-            this.buttonUpdate.Click += new System.EventHandler(this.buttonUpdate_Click);
+            this.buttonUpdate.Click += new System.EventHandler(this.buttonRef_Click);
             // 
             // FormMain
             // 

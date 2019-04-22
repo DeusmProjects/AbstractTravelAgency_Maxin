@@ -1,5 +1,6 @@
 ﻿using AbstractTravelAgencyServiceDAL.BindingModel;
 using AbstractTravelAgencyServiceDAL.Interfaces;
+using AbstractTravelAgencyServiceDAL.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,26 +9,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Unity;
 
 namespace AbstractTravelAgencyView
 {
     public partial class FormCitiesLoad : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-        private readonly IReportService service;
-        public FormCitiesLoad(IReportService service)
+        public FormCitiesLoad()
         {
             InitializeComponent();
-            this.service = service;
         }
-
-        private void FormCitiessLoad_Load(object sender, EventArgs e)
+        private void FormCitiesLoad_Load(object sender, EventArgs e)
         {
             try
             {
-                var dict = service.GetCitiesLoad();
+                var dict = APIClient.GetRequest<List<CitiesLoadViewModel>>("api/Edition/GetCitiesLoad");
                 if (dict != null)
                 {
                     dataGridView.Rows.Clear();
@@ -45,8 +40,7 @@ namespace AbstractTravelAgencyView
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void buttonSaveToExcel_Click(object sender, EventArgs e)
@@ -59,20 +53,17 @@ namespace AbstractTravelAgencyView
             {
                 try
                 {
-                    service.SaveCitiesLoad(new ReportBindingModel
+                    APIClient.PostRequest<ReportBindingModel, bool>("api/Report/SaveCitiesLoad", new ReportBindingModel
                     {
                         FileName = sfd.FileName
                     });
-                    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                   MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
-
     }
 }

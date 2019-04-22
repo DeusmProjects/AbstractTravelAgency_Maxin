@@ -30,6 +30,16 @@ namespace AbstractTravelAgencyView
                 {
                     CityViewModel client = APIClient.GetRequest<CityViewModel>("api/City/Get/" + id.Value);
                     textBoxCity.Text = client.CityName;
+                    if (client != null)
+                    {
+                        textBoxCity.Text = client.CityName;
+                        dataGridView.DataSource = client.CityConditions;
+                        dataGridView.Columns[0].Visible = false;
+                        dataGridView.Columns[1].Visible = false;
+                        dataGridView.Columns[2].Visible = false;
+                        dataGridView.Columns[3].AutoSizeMode =
+                        DataGridViewAutoSizeColumnMode.Fill;
+                    }
                 }
                 catch (Exception ex)
                 {

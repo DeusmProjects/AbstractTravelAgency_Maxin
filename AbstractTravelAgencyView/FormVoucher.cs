@@ -16,49 +16,45 @@ namespace AbstractTravelAgencyView
     public partial class FormVoucher : Form
     {
         public int Id { set { id = value; } }
-        private readonly IVoucherService service;
         private int? id;
-        private List<VoucherConditionViewModel> voucherConditions;
-        public FormVoucher(IVoucherService service)
+        private List<VoucherConditionViewModel> productComponents;
+        public FormVoucher()
         {
             InitializeComponent();
-            this.service = service;
         }
-        private void FormProduct_Load(object sender, EventArgs e)
+        private void FormVoucher_Load(object sender, EventArgs e)
         {
             if (id.HasValue)
             {
                 try
                 {
-                    VoucherViewModel view = service.GetElement(id.Value);
+                    VoucherViewModel view = APIClient.GetRequest<VoucherViewModel>("api/Voucher/Get/" + id.Value);
                     if (view != null)
                     {
                         textBoxName.Text = view.VoucherName;
                         textBoxPrice.Text = view.Cost.ToString();
-                        voucherConditions = view.VoucherCondition;
+                        productComponents = view.VoucherCondition;
                         LoadData();
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                   MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                voucherConditions = new List<VoucherConditionViewModel>();
+                productComponents = new List<VoucherConditionViewModel>();
             }
         }
-
         private void LoadData()
         {
             try
             {
-                if (voucherConditions != null)
+                if (productComponents != null)
                 {
                     dataGridView.DataSource = null;
-                    dataGridView.DataSource = voucherConditions;
+                    dataGridView.DataSource = productComponents;
                     dataGridView.Columns[0].Visible = false;
                     dataGridView.Columns[1].Visible = false;
                     dataGridView.Columns[2].Visible = false;
@@ -68,13 +64,12 @@ namespace AbstractTravelAgencyView
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormVoucherCondition>();
+            var form = new FormVoucherCondition();
             if (form.ShowDialog() == DialogResult.OK)
             {
                 if (form.Model != null)
@@ -83,22 +78,20 @@ namespace AbstractTravelAgencyView
                     {
                         form.Model.VoucherId = id.Value;
                     }
-                    voucherConditions.Add(form.Model);
+                    productComponents.Add(form.Model);
                 }
                 LoadData();
             }
         }
-        private void buttonUpd_Click(object sender, EventArgs e)
+        private void buttonUpdate_Click(object sender, EventArgs e)
         {
             if (dataGridView.SelectedRows.Count == 1)
             {
-                var form = Container.Resolve<FormVoucherCondition>();
-                form.Model =
-               voucherConditions[dataGridView.SelectedRows[0].Cells[0].RowIndex];
+                var form = new FormVoucherCondition();
+                form.Model = productComponents[dataGridView.SelectedRows[0].Cells[0].RowIndex];
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    voucherConditions[dataGridView.SelectedRows[0].Cells[0].RowIndex] =
-                   form.Model;
+                    productComponents[dataGridView.SelectedRows[0].Cells[0].RowIndex] = form.Model;
                     LoadData();
                 }
             }
@@ -107,17 +100,15 @@ namespace AbstractTravelAgencyView
         {
             if (dataGridView.SelectedRows.Count == 1)
             {
-                if (MessageBox.Show("Удалить запись", "Вопрос", MessageBoxButtons.YesNo,
-               MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MessageBox.Show("Удалить запись", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     try
                     {
-                        voucherConditions.RemoveAt(dataGridView.SelectedRows[0].Cells[0].RowIndex);
+                        productComponents.RemoveAt(dataGridView.SelectedRows[0].Cells[0].RowIndex);
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                       MessageBoxIcon.Error);
+                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     LoadData();
                 }
@@ -131,63 +122,58 @@ namespace AbstractTravelAgencyView
         {
             if (string.IsNullOrEmpty(textBoxName.Text))
             {
-                MessageBox.Show("Заполните название", "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show("Заполните название", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (string.IsNullOrEmpty(textBoxPrice.Text))
             {
-                MessageBox.Show("Заполните цену", "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show("Заполните цену", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (voucherConditions == null || voucherConditions.Count == 0)
+            if (productComponents == null || productComponents.Count == 0)
             {
-                MessageBox.Show("Заполните компоненты", "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show("Заполните компоненты", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             try
             {
-                List<VoucherConditionBindingModel> voucherConditionBM = new List<VoucherConditionBindingModel>();
-                for (int i = 0; i < voucherConditions.Count; ++i)
+                List<VoucherConditionBindingModel> productComponentBM = new List<VoucherConditionBindingModel>();
+                for (int i = 0; i < productComponents.Count; ++i)
                 {
-                    voucherConditionBM.Add(new VoucherConditionBindingModel
+                    productComponentBM.Add(new VoucherConditionBindingModel
                     {
-                        Id = voucherConditions[i].Id,
-                        VoucherId = voucherConditions[i].VoucherId,
-                        ConditionId = voucherConditions[i].ConditionId,
-                        Amount = voucherConditions[i].Amount
+                        Id = productComponents[i].Id,
+                        VoucherId = productComponents[i].VoucherId,
+                        ConditionId = productComponents[i].ConditionId,
+                        Amount = productComponents[i].Amount
                     });
                 }
                 if (id.HasValue)
                 {
-                    service.UpdElement(new VoucherBindingModel
+                    APIClient.PostRequest<VoucherBindingModel, bool>("api/Voucher/UpdElement", new VoucherBindingModel
                     {
                         Id = id.Value,
                         VoucherName = textBoxName.Text,
                         Cost = Convert.ToInt32(textBoxPrice.Text),
-                        VoucherConditions = voucherConditionBM
+                        VoucherConditions = productComponentBM
                     });
                 }
                 else
                 {
-                     service.AddElement(new VoucherBindingModel
-                     {
-                         VoucherName = textBoxName.Text,
-                         Cost = Convert.ToInt32(textBoxPrice.Text),
-                         VoucherConditions = voucherConditionBM
-                     });
+                    APIClient.PostRequest<VoucherBindingModel, bool>("api/Voucher/AddElement", new VoucherBindingModel
+                    {
+                        VoucherName = textBoxName.Text,
+                        Cost = Convert.ToInt32(textBoxPrice.Text),
+                        VoucherConditions = productComponentBM
+                    });
                 }
-                MessageBox.Show("Сохранение прошло успешно", "Сообщение",
-               MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 DialogResult = DialogResult.OK;
                 Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void buttonCancel_Click(object sender, EventArgs e)

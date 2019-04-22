@@ -10,31 +10,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Unity;
 
 namespace AbstractTravelAgencyView
 {
     public partial class FormCreateBooking : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-        private readonly ICustomerService serviceC;
-        private readonly IVoucherService serviceP;
-        private readonly IMainService serviceM;
-
-        public FormCreateBooking(ICustomerService serviceC, IVoucherService serviceP,
-       IMainService serviceM)
+        public FormCreateBooking()
         {
             InitializeComponent();
-            this.serviceC = serviceC;
-            this.serviceP = serviceP;
-            this.serviceM = serviceM;
         }
         private void FormCreateBooking_Load(object sender, EventArgs e)
         {
             try
             {
-                List<CustomerViewModel> listC = serviceC.GetList();
+                List<CustomerViewModel> listC = APIClient.GetRequest<List<CustomerViewModel>>("api/Customer/GetList");
                 if (listC != null)
                 {
                     comboBoxCustomer.DisplayMember = "CustomerFIO";
@@ -42,12 +31,12 @@ namespace AbstractTravelAgencyView
                     comboBoxCustomer.DataSource = listC;
                     comboBoxCustomer.SelectedItem = null;
                 }
-                List<VoucherViewModel> listV = serviceP.GetList();
-                if (listV != null)
+                List<VoucherViewModel> listP = APIClient.GetRequest<List<VoucherViewModel>>("api/Voucher/GetList");
+                if (listP != null)
                 {
                     comboBoxVoucher.DisplayMember = "VoucherName";
                     comboBoxVoucher.ValueMember = "Id";
-                    comboBoxVoucher.DataSource = listV;
+                    comboBoxVoucher.DataSource = listP;
                     comboBoxVoucher.SelectedItem = null;
                 }
             }
@@ -59,20 +48,18 @@ namespace AbstractTravelAgencyView
         }
         private void CalcSum()
         {
-            if (comboBoxVoucher.SelectedValue != null &&
-           !string.IsNullOrEmpty(textBoxCount.Text))
+            if (comboBoxVoucher.SelectedValue != null && !string.IsNullOrEmpty(textBoxCount.Text))
             {
                 try
                 {
                     int id = Convert.ToInt32(comboBoxVoucher.SelectedValue);
-                    VoucherViewModel product = serviceP.GetElement(id);
+                    VoucherViewModel item = APIClient.GetRequest<VoucherViewModel>("api/Voucher/Get/" + id);
                     int count = Convert.ToInt32(textBoxCount.Text);
-                    textBoxSum.Text = (count * product.Cost).ToString();
+                    textBoxSum.Text = (count * item.Cost).ToString();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                   MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -88,40 +75,35 @@ namespace AbstractTravelAgencyView
         {
             if (string.IsNullOrEmpty(textBoxCount.Text))
             {
-                MessageBox.Show("Заполните поле Количество", "Ошибка",
-               MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Заполните поле Количество", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (comboBoxCustomer.SelectedValue == null)
             {
-                MessageBox.Show("Выберите заказчика", "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show("Выберите клиента", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (comboBoxVoucher.SelectedValue == null)
             {
-                MessageBox.Show("Выберите путевку", "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show("Выберите печатное изделие", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             try
             {
-                serviceM.CreateBooking(new BookingBindingModel
+                APIClient.PostRequest<BookingBindingModel, bool>("api/Main/CreateBooking", new BookingBindingModel
                 {
                     CustomerId = Convert.ToInt32(comboBoxCustomer.SelectedValue),
                     VoucherId = Convert.ToInt32(comboBoxVoucher.SelectedValue),
                     Amount = Convert.ToInt32(textBoxCount.Text),
-                    TotalSum = Convert.ToInt32(textBoxSum.Text)
+                    TotalSum = Convert.ToDecimal(textBoxSum.Text)
                 });
-                MessageBox.Show("Сохранение прошло успешно", "Сообщение",
-               MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 DialogResult = DialogResult.OK;
                 Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void buttonCancel_Click(object sender, EventArgs e)
@@ -129,6 +111,5 @@ namespace AbstractTravelAgencyView
             DialogResult = DialogResult.Cancel;
             Close();
         }
-
     }
 }
