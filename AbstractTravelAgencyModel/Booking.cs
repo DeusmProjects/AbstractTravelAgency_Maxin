@@ -16,5 +16,7 @@ namespace AbstractTravelAgencyModel
         public BookingStatus StatusBooking { get; set; }
         public DateTime DateCreateBooking { get; set; }
         public DateTime? DateImplementBooking { get; set; }
+        public virtual Customer Customer { get; set; }
+        public virtual Voucher Voucher { get; set; }
     }
 }
