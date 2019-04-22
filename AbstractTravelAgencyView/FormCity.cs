@@ -10,21 +10,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Unity;
 
 namespace AbstractTravelAgencyView
 {
     public partial class FormCity : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
         public int Id { set { id = value; } }
-        private readonly ICityService service;
         private int? id;
-        public FormCity(ICityService service)
+
+        public FormCity()
         {
             InitializeComponent();
-            this.service = service;
         }
         private void FormCity_Load(object sender, EventArgs e)
         {
@@ -32,16 +28,8 @@ namespace AbstractTravelAgencyView
             {
                 try
                 {
-                    CityViewModel view = service.GetElement(id.Value);
-                    if (view != null)
-                    {
-                        textBoxCity.Text = view.CityName;
-                        dataGridView.DataSource = view.CityConditions;
-                        dataGridView.Columns[0].Visible = false;
-                        dataGridView.Columns[1].Visible = false;
-                        dataGridView.Columns[2].Visible = false;
-                        dataGridView.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                    }
+                    CityViewModel client = APIClient.GetRequest<CityViewModel>("api/City/Get/" + id.Value);
+                    textBoxCity.Text = client.CityName;
                 }
                 catch (Exception ex)
                 {
@@ -62,18 +50,20 @@ namespace AbstractTravelAgencyView
             {
                 if (id.HasValue)
                 {
-                    service.UpdElement(new CityBindingModel
-                    {
-                        Id = id.Value,
-                        CityName = textBoxCity.Text
-                    });
+                    APIClient.PostRequest<CityBindingModel,
+                   bool>("api/City/UpdElement", new CityBindingModel
+                   {
+                       Id = id.Value,
+                       CityName = textBoxCity.Text
+                   });
                 }
                 else
                 {
-                    service.AddElement(new CityBindingModel
-                    {
-                        CityName = textBoxCity.Text
-                    });
+                    APIClient.PostRequest<CityBindingModel,
+                   bool>("api/City/AddElement", new CityBindingModel
+                   {
+                       CityName = textBoxCity.Text
+                   });
                 }
                 MessageBox.Show("Сохранение прошло успешно", "Сообщение",
                MessageBoxButtons.OK, MessageBoxIcon.Information);
