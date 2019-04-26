@@ -23,6 +23,6 @@ namespace AbstractTravelAgencyServiceImplementDataBase
         public virtual DbSet<VoucherCondition> VoucherConditions { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<CityCondition> CityConditions { get; set; }
-
+        public virtual DbSet<Executor> Executors { get; set;}
     }
 }

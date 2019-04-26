@@ -2,38 +2,49 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AbstractTravelAgencyServiceDAL.ViewModel
 {
+    [DataContract]
     public class BookingViewModel
     {
+        [DataMember]
         public int Id { get; set; }
 
+        [DataMember]
         public int CustomerId { get; set; }
 
-        [DisplayName("ФИО клиента")]
+        [DataMember]
         public string CustomerFIO { get; set; }
 
+        [DataMember]
         public int VoucherId { get; set; }
 
-        [DisplayName("Путевка")]
+        [DataMember]
         public string VoucherName { get; set; }
 
-        [DisplayName("Количество")]
+        [DataMember]
+        public int? ExecutorId { get; set; }
+
+        [DataMember]
+        public string ExecutorName { get; set; }
+
+        [DataMember]
         public int Amount { get; set; }
 
-        [DisplayName("Сумма")]
+        [DataMember]
         public decimal TotalSum { get; set; }
 
-        [DisplayName("Статус")]
+        [DataMember]
         public string StatusBooking { get; set; }
 
-        [DisplayName("Дата создания")]
+        [DataMember]
         public string DateCreateBooking { get; set; }
 
-        [DisplayName("Дата выполнения")]
+        [DataMember]
         public string DateImplementBooking { get; set; }
     }
 }

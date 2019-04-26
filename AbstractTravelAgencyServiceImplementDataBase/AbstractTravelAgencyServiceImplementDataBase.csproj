@@ -62,6 +62,7 @@
     <Compile Include="AbstractDbScope.cs" />
     <Compile Include="Implementations\CityServiceDB.cs" />
     <Compile Include="Implementations\ConditionServiceDB.cs" />
+    <Compile Include="Implementations\ExecutorServiceDB.cs" />
     <Compile Include="Implementations\MainServiceDB.cs" />
     <Compile Include="Implementations\ReportServiceDB.cs" />
     <Compile Include="Implementations\VoucherServiceDB.cs" />
