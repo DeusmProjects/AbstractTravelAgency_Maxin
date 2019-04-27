@@ -47,6 +47,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
                 Id = maxId + 1,
                 CustomerId = model.CustomerId,
                 VoucherId = model.VoucherId,
+                ExecutorId = model.ExecutorId,
                 DateCreateBooking = DateTime.Now,
                 Amount = model.Amount,
                 TotalSum = model.TotalSum,
@@ -152,17 +153,9 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
             }
         }
 
-        public List<BookingViewModel> GetFreeOrders()
+        public List<BookingViewModel> GetFreeBookings()
         {
-            List<BookingViewModel> result = context.Orders
-            .Where(x => x.Status == OrderStatus.Принят || x.Status ==
-           OrderStatus.НедостаточноРесурсов)
-            .Select(rec => new OrderViewModel
-            {
-                Id = rec.Id
-            })
-            .ToList();
-            return result;
-        }
+            return null;
+        }
     }
 }

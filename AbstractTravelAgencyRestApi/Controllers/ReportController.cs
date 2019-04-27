@@ -53,7 +53,7 @@ namespace AbstractTravelAgencyRestApi.Controllers
         }
 
         [HttpPost]
-        public void SaveClientOrders(ReportBindingModel model)
+        public void SaveCustomerBookings(ReportBindingModel model)
         {
             _service.SaveCustomerBookings(model);
         }

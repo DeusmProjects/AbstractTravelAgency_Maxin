@@ -22,7 +22,7 @@ namespace AbstractTravelAgencyView
         {
             try
             {
-                var dict = APIClient.GetRequest<List<CitiesLoadViewModel>>("api/Edition/GetCitiesLoad");
+                var dict = APIClient.GetRequest<List<CitiesLoadViewModel>>("api/Report/GetCitiesLoad");
                 if (dict != null)
                 {
                     dataGridView.Rows.Clear();

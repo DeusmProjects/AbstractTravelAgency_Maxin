@@ -13,10 +13,12 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
     public class ExecutorServiceDB : IExecutorService
     {
         private AbstractDbScope context;
+
         public ExecutorServiceDB(AbstractDbScope context)
         {
             this.context = context;
         }
+
         public List<ExecutorViewModel> GetList()
         {
             List<ExecutorViewModel> result = context.Executors
@@ -28,6 +30,7 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
             .ToList();
             return result;
         }
+
         public ExecutorViewModel GetElement(int id)
         {
             Executor element = context.Executors.FirstOrDefault(rec => rec.Id == id);
@@ -55,6 +58,7 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
             });
             context.SaveChanges();
         }
+
         public void UpdElement(ExecutorBindingModel model)
         {
             Executor element = context.Executors.FirstOrDefault(rec =>
@@ -72,6 +76,7 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
             element.ExecutorFIO = model.ExecutorFIO;
             context.SaveChanges();
         }
+
         public void DelElement(int id)
         {
             Executor element = context.Executors.FirstOrDefault(rec => rec.Id ==
@@ -86,6 +91,7 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
                 throw new Exception("Элемент не найден");
             }
         }
+
         public ExecutorViewModel GetFreeWorker()
         {
             var ordersWorker = context.Executors
