@@ -64,6 +64,7 @@
     <Compile Include="Implementations\ConditionServiceDB.cs" />
     <Compile Include="Implementations\ExecutorServiceDB.cs" />
     <Compile Include="Implementations\MainServiceDB.cs" />
+    <Compile Include="Implementations\MessageInfoServiceDB.cs" />
     <Compile Include="Implementations\ReportServiceDB.cs" />
     <Compile Include="Implementations\VoucherServiceDB.cs" />
     <Compile Include="Implementations\CustomerServiceDB.cs" />

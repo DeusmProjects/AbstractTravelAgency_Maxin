@@ -55,6 +55,7 @@
     <Compile Include="Booking.cs" />
     <Compile Include="BookingStatus.cs" />
     <Compile Include="Executor.cs" />
+    <Compile Include="InfoMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Voucher.cs" />
     <Compile Include="VoucherCondition.cs" />
