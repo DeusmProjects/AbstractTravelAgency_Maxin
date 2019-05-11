@@ -2,6 +2,7 @@
 using AbstractTravelAgencyServiceDAL.BindingModel;
 using AbstractTravelAgencyServiceDAL.Interfaces;
 using System;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace AbstractTravelAgencyView
@@ -21,13 +22,21 @@ namespace AbstractTravelAgencyView
             {
                 try
                 {
-                    CustomerViewModel client = APIClient.GetRequest<CustomerViewModel>("api/Customer/Get/" + id.Value);
-                    textBoxFIO.Text = client.CustomerFIO;
+                    CustomerViewModel customer = APIClient.GetRequest<CustomerViewModel>("api/Customer/Get/" + id.Value);
+                    textBoxFIO.Text = customer.CustomerFIO;
+                    textBoxMail.Text = customer.Mail;
+                    dataGridView.DataSource = customer.Messages;
+                    dataGridView.Columns[0].Visible = false;
+                    dataGridView.Columns[1].Visible = false;
+                    dataGridView.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                   MessageBoxIcon.Error);
+                    while (ex.InnerException != null)
+                    {
+                        ex = ex.InnerException;
+                    }
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -35,39 +44,39 @@ namespace AbstractTravelAgencyView
         {
             if (string.IsNullOrEmpty(textBoxFIO.Text))
             {
-                MessageBox.Show("Заполните ФИО", "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show("Заполните ФИО", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            try
+            string fio = textBoxFIO.Text;
+            string mail = textBoxMail.Text;
+            if (!string.IsNullOrEmpty(mail))
             {
-                if (id.HasValue)
+                if (Regex.IsMatch(mail, @"^(?("")(""[^""]+?""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9az][-\w]*[0-9a-z]*\.)+[a-z0-9]{2,17}))$"))
                 {
-                    APIClient.PostRequest<CustomerBindingModel,
-                   bool>("api/Customer/UpdElement", new CustomerBindingModel
-                   {
-                       Id = id.Value,
-                       CustomerFIO = textBoxFIO.Text
-                   });
+                    MessageBox.Show("Неверный формат для электронной почты", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
-                else
-                {
-                    APIClient.PostRequest<CustomerBindingModel,
-                   bool>("api/Customer/AddElement", new CustomerBindingModel
-                   {
-                       CustomerFIO = textBoxFIO.Text
-                   });
-                }
-                MessageBox.Show("Сохранение прошло успешно", "Сообщение",
-               MessageBoxButtons.OK, MessageBoxIcon.Information);
-                DialogResult = DialogResult.OK;
-                Close();
             }
-            catch (Exception ex)
+            if (id.HasValue)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                APIClient.PostRequest<CustomerBindingModel, bool>("api/Customer/UpdElement", new CustomerBindingModel
+               {
+                   Id = id.Value,
+                   CustomerFIO = fio,
+                   Mail = mail
+               });
             }
+            else
+            {
+                APIClient.PostRequest<CustomerBindingModel,bool>("api/Customer/AddElement", new CustomerBindingModel
+                {
+                   CustomerFIO = fio,
+                   Mail = mail
+                });
+            }
+            MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            DialogResult = DialogResult.OK;
+            Close();
         }
         private void buttonCancel_Click(object sender, EventArgs e)
         {

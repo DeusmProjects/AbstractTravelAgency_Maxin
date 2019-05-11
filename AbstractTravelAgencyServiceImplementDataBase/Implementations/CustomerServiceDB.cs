@@ -1,6 +1,7 @@
 ﻿using AbstractTravelAgencyModel;
 using AbstractTravelAgencyServiceDAL.BindingModel;
 using AbstractTravelAgencyServiceDAL.Interfaces;
+using AbstractTravelAgencyServiceDAL.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,21 +13,25 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
     public class CustomerServiceDB : ICustomerService
     {
         private AbstractDbScope context;
+
         public CustomerServiceDB(AbstractDbScope context)
         {
             this.context = context;
         }
+
         public List<CustomerViewModel> GetList()
         {
             List<CustomerViewModel> result = context.Customers.Select(rec => new
            CustomerViewModel
             {
                 Id = rec.Id,
-                CustomerFIO = rec.CustomerFIO
+                CustomerFIO = rec.CustomerFIO,
+                Mail = rec.Mail
             })
             .ToList();
             return result;
         }
+
         public CustomerViewModel GetElement(int id)
         {
             Customer element = context.Customers.FirstOrDefault(rec => rec.Id == id);
@@ -35,11 +40,23 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
                 return new CustomerViewModel
                 {
                     Id = element.Id,
-                    CustomerFIO = element.CustomerFIO
+                    CustomerFIO = element.CustomerFIO,
+                    Mail = element.Mail,
+                    Messages = context.InfoMessages
+                     .Where(recM => recM.CustomerId == element.Id)
+                     .Select(recM => new InfoMessageViewModel
+                     {
+                        MessageId = recM.MessageId,
+                        DateDelivery = recM.DateDelivery,
+                        Subject = recM.Subject,
+                        Body = recM.Body
+                     })
+                    .ToList()
                 };
             }
             throw new Exception("Элемент не найден");
         }
+
         public void AddElement(CustomerBindingModel model)
         {
             Customer element = context.Customers.FirstOrDefault(rec => rec.CustomerFIO ==
@@ -50,10 +67,12 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
             }
             context.Customers.Add(new Customer
             {
-                CustomerFIO = model.CustomerFIO
+                CustomerFIO = model.CustomerFIO,
+                Mail = model.Mail
             });
             context.SaveChanges();
         }
+
         public void UpdElement(CustomerBindingModel model)
         {
             Customer element = context.Customers.FirstOrDefault(rec => rec.CustomerFIO ==
@@ -68,8 +87,10 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
                 throw new Exception("Элемент не найден");
             }
             element.CustomerFIO = model.CustomerFIO;
+            element.Mail = model.Mail;
             context.SaveChanges();
         }
+
         public void DelElement(int id)
         {
             Customer element = context.Customers.FirstOrDefault(rec => rec.Id == id);
@@ -83,6 +104,5 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
                 throw new Exception("Элемент не найден");
             }
         }
-
     }
 }

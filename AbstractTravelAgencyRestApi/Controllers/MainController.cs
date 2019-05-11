@@ -15,12 +15,13 @@ namespace AbstractTravelAgencyRestApi.Controllers
     {
         private readonly IMainService _service;
         private readonly IExecutorService _serviceExecutor;
-        public MainController(IMainService service, IExecutorService
-       serviceExecutor)
+
+        public MainController(IMainService service, IExecutorService serviceExecutor)
         {
             _service = service;
             _serviceExecutor = serviceExecutor;
         }
+
         [HttpGet]
         public IHttpActionResult GetList()
         {
@@ -31,6 +32,7 @@ namespace AbstractTravelAgencyRestApi.Controllers
             }
             return Ok(list);
         }
+
         [HttpPost]
         public void CreateBooking(BookingBindingModel model)
         {

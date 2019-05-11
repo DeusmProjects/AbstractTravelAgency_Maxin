@@ -24,5 +24,7 @@ namespace AbstractTravelAgencyServiceImplementDataBase
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<CityCondition> CityConditions { get; set; }
         public virtual DbSet<Executor> Executors { get; set;}
+        public virtual DbSet<InfoMessage> InfoMessages { get; set;}
+
     }
 }

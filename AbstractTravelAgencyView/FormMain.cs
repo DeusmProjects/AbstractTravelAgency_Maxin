@@ -145,5 +145,11 @@ namespace AbstractTravelAgencyView
             var form = new FormExecutors();
             form.ShowDialog();
         }
+
+        private void письмаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = new FormMails();
+            form.ShowDialog();
+        }
     }
 }
