@@ -68,7 +68,8 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
             scope.SaveChanges();
 
             var customer = scope.Customers.FirstOrDefault(x => x.Id == model.CustomerId);
-            SendEmail(customer.Mail, "Оповещение по заказам", string.Format("Заказ №{0} от {1} создан успешно",                 booking.Id, booking.DateCreateBooking.ToShortDateString()));
+            SendEmail(customer.Mail, "Оповещение по заказам", string.Format("Заказ №{0} от {1} создан успешно", 
+                booking.Id, booking.DateCreateBooking.ToShortDateString()));
         }
 
         private void SendEmail(string mailAddress, string subject, string text)
@@ -184,7 +185,8 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
             }
             element.StatusBooking = BookingStatus.Готов;
             scope.SaveChanges();
-            SendEmail(element.Customer.Mail, "Оповещение по заказам", string.Format("Заказ №{0} от {1} передан на оплату",                 element.Id, element.DateCreateBooking.ToShortDateString()));
+            SendEmail(element.Customer.Mail, "Оповещение по заказам", string.Format("Заказ №{0} от {1} передан на оплату", 
+                element.Id, element.DateCreateBooking.ToShortDateString()));
         }
 
         public void PayBooking(BookingBindingModel model)
