@@ -10,35 +10,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Unity;
 
 namespace AbstractTravelAgencyView
 {
     public partial class FormCondition : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
         public int Id { set { id = value; } }
-        private readonly IConditionService service;
         private int? id;
 
-        public FormCondition(IConditionService service)
+        public FormCondition()
         {
             InitializeComponent();
-            this.service = service;
         }
-
         private void FormCondition_Load(object sender, EventArgs e)
         {
             if (id.HasValue)
             {
                 try
                 {
-                    ConditionViewModel view = service.GetElement(id.Value);
-                    if (view != null)
-                    {
-                        textBoxCondition.Text = view.ConditionName;
-                    }
+                    ConditionViewModel client = APIClient.GetRequest<ConditionViewModel>("api/Condition/Get/" + id.Value);
+                    textBoxCondition.Text = client.ConditionName;
                 }
                 catch (Exception ex)
                 {
@@ -51,7 +42,7 @@ namespace AbstractTravelAgencyView
         {
             if (string.IsNullOrEmpty(textBoxCondition.Text))
             {
-                MessageBox.Show("Заполните условие", "Ошибка", MessageBoxButtons.OK,
+                MessageBox.Show("Заполните название", "Ошибка", MessageBoxButtons.OK,
                MessageBoxIcon.Error);
                 return;
             }
@@ -59,18 +50,20 @@ namespace AbstractTravelAgencyView
             {
                 if (id.HasValue)
                 {
-                    service.UpdElement(new ConditionBindingModel
-                    {
-                        Id = id.Value,
-                        ConditionName = textBoxCondition.Text
-                    });
+                    APIClient.PostRequest<ConditionBindingModel,
+                   bool>("api/Condition/UpdElement", new ConditionBindingModel
+                   {
+                       Id = id.Value,
+                       ConditionName = textBoxCondition.Text
+                   });
                 }
                 else
                 {
-                    service.AddElement(new ConditionBindingModel
-                    {
-                        ConditionName = textBoxCondition.Text
-                    });
+                    APIClient.PostRequest<ConditionBindingModel,
+                   bool>("api/Condition/AddElement", new ConditionBindingModel
+                   {
+                       ConditionName = textBoxCondition.Text
+                   });
                 }
                 MessageBox.Show("Сохранение прошло успешно", "Сообщение",
                MessageBoxButtons.OK, MessageBoxIcon.Information);

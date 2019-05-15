@@ -58,6 +58,7 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
             });
             scope.SaveChanges();
         }
+
         public void TakeBookingInWork(BookingBindingModel model)
         {
             using (var transaction = scope.Database.BeginTransaction())
@@ -75,13 +76,13 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
                         throw new Exception("Заказ не в статусе \"Принят\"");
                     }
                     var productConditions = scope.VoucherConditions.Include(rec =>
-                    rec.Condition).Where(rec => rec.VoucherId == element.VoucherId);
+                    rec.Condition).Where(rec => rec.VoucherId == element.VoucherId).ToList();
                     // списываем
                     foreach (var productCondition in productConditions)
                     {
                         int countOnCitys = productCondition.Amount * element.Amount;
                         var stockConditions = scope.CityConditions.Where(rec =>
-                        rec.ConditionId == productCondition.ConditionId);
+                        rec.ConditionId == productCondition.ConditionId).ToList();
                         foreach (var stockCondition in stockConditions)
                         {
                             // компонентов на одном слкаде может не хватать

@@ -123,7 +123,6 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "FormCustomerBookings";
             this.Text = "Заказы клиентов";
-            this.Load += new System.EventHandler(this.FormCustomerBookings_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

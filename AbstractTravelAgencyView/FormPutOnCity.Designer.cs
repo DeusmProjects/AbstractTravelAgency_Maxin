@@ -125,7 +125,7 @@
             this.Controls.Add(this.comboBoxCity);
             this.Name = "FormPutOnCity";
             this.Text = "Пополнение города";
-            this.Load += new System.EventHandler(this.FormPutOnStock_Load);
+            this.Load += new System.EventHandler(this.FormPutOnCity_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

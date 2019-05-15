@@ -9,34 +9,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Unity;
 
 namespace AbstractTravelAgencyView
 {
     public partial class FormVoucherCondition : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
         public VoucherConditionViewModel Model
         {
             set { model = value; }
-            get
-            {
-                return model;
-            }
+            get { return model; }
         }
-        private readonly IConditionService service;
         private VoucherConditionViewModel model;
-        public FormVoucherCondition(IConditionService service)
+        public FormVoucherCondition()
         {
             InitializeComponent();
-            this.service = service;
         }
         private void FormVoucherCondition_Load(object sender, EventArgs e)
         {
             try
             {
-                List<ConditionViewModel> list = service.GetList();
+                List<ConditionViewModel> list = APIClient.GetRequest<List<ConditionViewModel>>("api/Condition/GetList");
                 if (list != null)
                 {
                     comboBox.DisplayMember = "ConditionName";
@@ -47,8 +39,7 @@ namespace AbstractTravelAgencyView
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             if (model != null)
             {
@@ -61,14 +52,12 @@ namespace AbstractTravelAgencyView
         {
             if (string.IsNullOrEmpty(textBoxCount.Text))
             {
-                MessageBox.Show("Заполните поле Количество", "Ошибка",
-               MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Заполните поле Количество", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (comboBox.SelectedValue == null)
             {
-                MessageBox.Show("Выберите условие", "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show("Выберите условие", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             try
@@ -86,15 +75,13 @@ namespace AbstractTravelAgencyView
                 {
                     model.Amount = Convert.ToInt32(textBoxCount.Text);
                 }
-                MessageBox.Show("Сохранение прошло успешно", "Сообщение",
-               MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 DialogResult = DialogResult.OK;
                 Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void buttonCancel_Click(object sender, EventArgs e)

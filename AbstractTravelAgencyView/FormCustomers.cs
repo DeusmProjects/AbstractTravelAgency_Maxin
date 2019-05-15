@@ -1,28 +1,17 @@
 ﻿using AbstractTravelAgencyModel;
+using AbstractTravelAgencyServiceDAL.BindingModel;
 using AbstractTravelAgencyServiceDAL.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Unity;
 
 namespace AbstractTravelAgencyView
 {
     public partial class FormCustomers : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-        private readonly ICustomerService service;
-
-        public FormCustomers(ICustomerService service)
+        public FormCustomers()
         {
             InitializeComponent();
-            this.service = service;
         }
 
         private void FormCustomers_Load(object sender, EventArgs e)
@@ -34,7 +23,8 @@ namespace AbstractTravelAgencyView
         {
             try
             {
-                List<CustomerViewModel> list = service.GetList();
+                List<CustomerViewModel> list =
+               APIClient.GetRequest<List<CustomerViewModel>>("api/Customer/GetList");
                 if (list != null)
                 {
                     dataGridView.DataSource = list;
@@ -49,31 +39,41 @@ namespace AbstractTravelAgencyView
                MessageBoxIcon.Error);
             }
         }
-
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormCustomer>();
+            var form = new FormCustomer();
             if (form.ShowDialog() == DialogResult.OK)
             {
                 LoadData();
             }
         }
-        private void buttonUpdate_Click(object sender, EventArgs e)
+        private void buttonUpd_Click(object sender, EventArgs e)
         {
-            LoadData();
+            if (dataGridView.SelectedRows.Count == 1)
+            {
+                var form = new FormCustomer
+                {
+                    Id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value)
+                };
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    LoadData();
+                }
+            }
         }
-        private void buttonDelete_Click(object sender, EventArgs e)
+        private void buttonDel_Click(object sender, EventArgs e)
         {
             if (dataGridView.SelectedRows.Count == 1)
             {
                 if (MessageBox.Show("Удалить запись", "Вопрос", MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question) == DialogResult.Yes)
+               MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     int id =
                    Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                     try
                     {
-                        service.DelElement(id);
+                        APIClient.PostRequest<CustomerBindingModel,
+                       bool>("api/Customer/DelElement", new CustomerBindingModel { Id = id });
                     }
                     catch (Exception ex)
                     {
@@ -84,18 +84,9 @@ namespace AbstractTravelAgencyView
                 }
             }
         }
-
-        private void buttonChange_Click(object sender, EventArgs e)
+        private void buttonRef_Click(object sender, EventArgs e)
         {
-            if (dataGridView.SelectedRows.Count == 1)
-            {
-                var form = Container.Resolve<FormCustomer>();
-                form.Id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-                    LoadData();
-                }
-            }
+            LoadData();
         }
     }
 }

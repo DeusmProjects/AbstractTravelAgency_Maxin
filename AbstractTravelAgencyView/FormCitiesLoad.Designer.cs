@@ -88,7 +88,7 @@
             this.Controls.Add(this.dataGridView);
             this.Name = "FormCitiesLoad";
             this.Text = "Закрузка городов";
-            this.Load += new System.EventHandler(this.FormCitiessLoad_Load);
+            this.Load += new System.EventHandler(this.FormCitiesLoad_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
 

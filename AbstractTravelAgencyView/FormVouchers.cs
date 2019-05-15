@@ -1,4 +1,5 @@
 ﻿using AbstractTravelAgencyModel;
+using AbstractTravelAgencyServiceDAL.BindingModel;
 using AbstractTravelAgencyServiceDAL.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -9,20 +10,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Unity;
 
 namespace AbstractTravelAgencyView
 {
     public partial class FormVouchers : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-        private readonly IVoucherService service;
-
-        public FormVouchers(IVoucherService service)
+        public FormVouchers()
         {
             InitializeComponent();
-            this.service = service;
         }
 
         private void FormVouchers_Load(object sender, EventArgs e)
@@ -34,7 +29,8 @@ namespace AbstractTravelAgencyView
         {
             try
             {
-                List<VoucherViewModel> list = service.GetList();
+                List<VoucherViewModel> list =
+               APIClient.GetRequest<List<VoucherViewModel>>("api/Voucher/GetList");
                 if (list != null)
                 {
                     dataGridView.DataSource = list;
@@ -49,31 +45,41 @@ namespace AbstractTravelAgencyView
                MessageBoxIcon.Error);
             }
         }
-
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormVoucher>();
+            var form = new FormVoucher();
             if (form.ShowDialog() == DialogResult.OK)
             {
                 LoadData();
             }
         }
-        private void buttonUpdate_Click(object sender, EventArgs e)
+        private void buttonUpd_Click(object sender, EventArgs e)
         {
-            LoadData();
+            if (dataGridView.SelectedRows.Count == 1)
+            {
+                var form = new FormVoucher
+                {
+                    Id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value)
+                };
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    LoadData();
+                }
+            }
         }
-        private void buttonDelete_Click(object sender, EventArgs e)
+        private void buttonDel_Click(object sender, EventArgs e)
         {
             if (dataGridView.SelectedRows.Count == 1)
             {
                 if (MessageBox.Show("Удалить запись", "Вопрос", MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question) == DialogResult.Yes)
+               MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     int id =
                    Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                     try
                     {
-                        service.DelElement(id);
+                        APIClient.PostRequest<VoucherBindingModel,
+                       bool>("api/Voucher/DelElement", new VoucherBindingModel { Id = id });
                     }
                     catch (Exception ex)
                     {
@@ -84,18 +90,9 @@ namespace AbstractTravelAgencyView
                 }
             }
         }
-
-        private void buttonChange_Click(object sender, EventArgs e)
+        private void buttonRef_Click(object sender, EventArgs e)
         {
-            if (dataGridView.SelectedRows.Count == 1)
-            {
-                var form = Container.Resolve<FormVoucher>();
-                form.Id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-                    LoadData();
-                }
-            }
+            LoadData();
         }
     }
 }
