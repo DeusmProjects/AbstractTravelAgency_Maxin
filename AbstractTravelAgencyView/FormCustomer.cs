@@ -1,6 +1,5 @@
 ﻿using AbstractTravelAgencyModel;
 using AbstractTravelAgencyServiceDAL.BindingModel;
-using AbstractTravelAgencyServiceDAL.Interfaces;
 using System;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;

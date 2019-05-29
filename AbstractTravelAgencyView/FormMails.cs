@@ -31,8 +31,7 @@ namespace AbstractTravelAgencyView
                 {
                     ex = ex.InnerException;
                 }
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
