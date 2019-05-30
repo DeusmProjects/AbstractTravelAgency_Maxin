@@ -27,7 +27,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
                 string clientFIO = string.Empty;
                 for (int j = 0; j < source.Customers.Count; ++j)
                 {
-                    if (source.Customers[j].Id == source.Bookings[i].CustomerId)
+                    if (source.Customers[j].CustomerId == source.Bookings[i].CustomerId)
                     {
                         clientFIO = source.Customers[j].CustomerFIO;
                         break;
@@ -36,7 +36,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
                 string voucherName = string.Empty;
                 for (int j = 0; j < source.Vouchers.Count; ++j)
                 {
-                    if (source.Vouchers[j].Id == source.Bookings[i].VoucherId)
+                    if (source.Vouchers[j].VoucherId == source.Bookings[i].VoucherId)
                     {
                         voucherName = source.Vouchers[j].VoucherName;
                         break;
@@ -44,7 +44,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
                 }
                 result.Add(new BookingViewModel
                 {
-                    Id = source.Bookings[i].Id,
+                    BookingId = source.Bookings[i].BookingId,
                     CustomerId = source.Bookings[i].CustomerId,
                     CustomerFIO = clientFIO,
                     VoucherId = source.Bookings[i].VoucherId,
@@ -64,14 +64,14 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
             int maxId = 0;
             for (int i = 0; i < source.Bookings.Count; ++i)
             {
-                if (source.Bookings[i].Id > maxId)
+                if (source.Bookings[i].BookingId > maxId)
                 {
-                    maxId = source.Customers[i].Id;
+                    maxId = source.Customers[i].CustomerId;
                 }
             }
             source.Bookings.Add(new Booking
             {
-                Id = maxId + 1,
+                BookingId = maxId + 1,
                 CustomerId = model.CustomerId,
                 VoucherId = model.VoucherId,
                 DataCreateBooking = DateTime.Now,
@@ -85,7 +85,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
             int index = -1;
             for (int i = 0; i < source.Bookings.Count; ++i)
             {
-                if (source.Bookings[i].Id == model.Id)
+                if (source.Bookings[i].BookingId == model.BookingId)
                 {
                     index = i;
                     break;
@@ -108,7 +108,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
             int index = -1;
             for (int i = 0; i < source.Bookings.Count; ++i)
             {
-                if (source.Customers[i].Id == model.Id)
+                if (source.Customers[i].CustomerId == model.CustomerId)
                 {
                     index = i;
                     break;
@@ -130,7 +130,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
             int index = -1;
             for (int i = 0; i < source.Bookings.Count; ++i)
             {
-                if (source.Customers[i].Id == model.Id)
+                if (source.Customers[i].CustomerId == model.CustomerId)
                 {
                     index = i;
                     break;

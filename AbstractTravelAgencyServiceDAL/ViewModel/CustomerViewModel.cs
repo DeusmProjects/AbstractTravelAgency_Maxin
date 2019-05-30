@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AbstractTravelAgencyModel
+namespace AbstractTravelAgencyServiceDAL.ViewModel
 {
     public class CustomerViewModel
     {
-        public int Id { get; set; }
+        public int CustomerId { get; set; }
 
         [DisplayName("ФИО Клиента")]
         public string CustomerFIO { get; set; }

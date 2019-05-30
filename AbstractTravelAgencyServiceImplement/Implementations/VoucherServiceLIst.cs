@@ -1,21 +1,21 @@
 ﻿using AbstractTravelAgencyModel;
 using AbstractTravelAgencyServiceDAL.BindingModel;
 using AbstractTravelAgencyServiceDAL.Interfaces;
+using AbstractTravelAgencyServiceDAL.ViewModel;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AbstractTravelAgencyServiceImplement.Implementations
 {
     public class VoucherServiceList : IVoucherService
     {
         private DataListSingleton source;
+
         public VoucherServiceList()
         {
             source = DataListSingleton.GetInstance();
         }
+
         public List<VoucherViewModel> GetList()
         {
             List<VoucherViewModel> result = new List<VoucherViewModel>();
@@ -24,12 +24,12 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
                 List<VoucherConditionViewModel> voucherConditions = new List<VoucherConditionViewModel>();
                 for (int j = 0; j < source.VoucherConditions.Count; ++j)
                 {
-                    if (source.VoucherConditions[j].VoucherId == source.Vouchers[i].Id)
+                    if (source.VoucherConditions[j].VoucherId == source.Vouchers[i].VoucherId)
                     {
                         string conditionName = string.Empty;
                         for (int k = 0; k < source.Conditions.Count; ++k)
                         {
-                            if (source.VoucherConditions[j].ConditionId == source.Conditions[k].Id)
+                            if (source.VoucherConditions[j].ConditionId == source.Conditions[k].ConditionId)
                             {
                                 conditionName = source.Conditions[k].ConditionName;
                                 break;
@@ -37,7 +37,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
                         }
                         voucherConditions.Add(new VoucherConditionViewModel
                         {
-                            Id = source.VoucherConditions[j].Id,
+                            VoucherConditionId = source.VoucherConditions[j].VoucherConditionId,
                             VoucherId = source.VoucherConditions[j].VoucherId,
                             ConditionId = source.VoucherConditions[j].ConditionId,
                             ConditionName = conditionName,
@@ -47,14 +47,15 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
                 }
                 result.Add(new VoucherViewModel
                 {
-                    Id = source.Vouchers[i].Id,
+                    VoucherId = source.Vouchers[i].VoucherId,
                     VoucherName = source.Vouchers[i].VoucherName,
                     Cost = source.Vouchers[i].Cost,
-                    VoucherCondition = voucherConditions
+                    VoucherConditions = voucherConditions
                 });
             }
             return result;
         }
+
         public VoucherViewModel GetElement(int id)
         {
             for (int i = 0; i < source.Vouchers.Count; ++i)
@@ -62,12 +63,12 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
                 List<VoucherConditionViewModel> voucherConditions = new List<VoucherConditionViewModel>();
                 for (int j = 0; j < source.VoucherConditions.Count; ++j)
                 {
-                    if (source.VoucherConditions[j].VoucherId == source.Vouchers[i].Id)
+                    if (source.VoucherConditions[j].VoucherId == source.Vouchers[i].VoucherId)
                     {
                         string conditionName = string.Empty;
                         for (int k = 0; k < source.Conditions.Count; ++k)
                         {
-                            if (source.VoucherConditions[j].ConditionId == source.Conditions[k].Id)
+                            if (source.VoucherConditions[j].ConditionId == source.Conditions[k].ConditionId)
                             {
                                 conditionName = source.Conditions[k].ConditionName;
                                 break;
@@ -75,7 +76,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
                         }
                         voucherConditions.Add(new VoucherConditionViewModel
                         {
-                            Id = source.VoucherConditions[j].Id,
+                            VoucherConditionId = source.VoucherConditions[j].VoucherConditionId,
                             VoucherId = source.VoucherConditions[j].VoucherId,
                             ConditionId = source.VoucherConditions[j].ConditionId,
                             ConditionName = conditionName,
@@ -83,14 +84,14 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
                         });
                     }
                 }
-                if (source.Vouchers[i].Id == id)
+                if (source.Vouchers[i].VoucherId == id)
                 {
                     return new VoucherViewModel
                     {
-                        Id = source.Vouchers[i].Id,
+                        VoucherId = source.Vouchers[i].VoucherId,
                         VoucherName = source.Vouchers[i].VoucherName,
                         Cost = source.Vouchers[i].Cost,
-                        VoucherCondition = voucherConditions
+                        VoucherConditions = voucherConditions
                     };
                 }
             }
@@ -102,9 +103,9 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
             int maxId = 0;
             for (int i = 0; i < source.Vouchers.Count; ++i)
             {
-                if (source.Vouchers[i].Id > maxId)
+                if (source.Vouchers[i].VoucherId > maxId)
                 {
-                    maxId = source.Vouchers[i].Id;
+                    maxId = source.Vouchers[i].VoucherId;
                 }
                 if (source.Vouchers[i].VoucherName == model.VoucherName)
                 {
@@ -113,7 +114,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
             }
             source.Vouchers.Add(new Voucher
             {
-                Id = maxId + 1,
+                VoucherId = maxId + 1,
                 VoucherName = model.VoucherName,
                 Cost = model.Cost
             });
@@ -121,9 +122,9 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
             int maxPCId = 0;
             for (int i = 0; i < source.VoucherConditions.Count; ++i)
             {
-                if (source.VoucherConditions[i].Id > maxPCId)
+                if (source.VoucherConditions[i].VoucherConditionId > maxPCId)
                 {
-                    maxPCId = source.VoucherConditions[i].Id;
+                    maxPCId = source.VoucherConditions[i].VoucherConditionId;
                 }
             }
             // убираем дубли по компонентам
@@ -144,7 +145,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
             {
                 source.VoucherConditions.Add(new VoucherCondition
                 {
-                    Id = ++maxPCId,
+                    VoucherConditionId = ++maxPCId,
                     VoucherId = maxId + 1,
                     ConditionId = model.VoucherConditions[i].ConditionId,
                     Amount = model.VoucherConditions[i].Amount
@@ -157,11 +158,11 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
             int index = -1;
             for (int i = 0; i < source.Vouchers.Count; ++i)
             {
-                if (source.Vouchers[i].Id == model.Id)
+                if (source.Vouchers[i].VoucherId == model.VoucherId)
                 {
                     index = i;
                 }
-                if (source.Vouchers[i].VoucherName == model.VoucherName && source.Vouchers[i].Id != model.Id)
+                if (source.Vouchers[i].VoucherName == model.VoucherName && source.Vouchers[i].VoucherId != model.VoucherId)
                 {
                     throw new Exception("Уже есть изделие с таким названием");
                 }
@@ -175,21 +176,21 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
             int maxPCId = 0;
             for (int i = 0; i < source.VoucherConditions.Count; ++i)
             {
-                if (source.VoucherConditions[i].Id > maxPCId)
+                if (source.VoucherConditions[i].VoucherConditionId > maxPCId)
                 {
-                    maxPCId = source.VoucherConditions[i].Id;
+                    maxPCId = source.VoucherConditions[i].VoucherConditionId;
                 }
             }
             // обновляем существуюущие компоненты
             for (int i = 0; i < source.VoucherConditions.Count; ++i)
             {
-                if (source.VoucherConditions[i].VoucherId == model.Id)
+                if (source.VoucherConditions[i].VoucherId == model.VoucherId)
                 {
                     bool flag = true;
                     for (int j = 0; j < model.VoucherConditions.Count; ++j)
                     {
                         // если встретили, то изменяем количество
-                        if (source.VoucherConditions[i].Id == model.VoucherConditions[j].Id)
+                        if (source.VoucherConditions[i].VoucherConditionId == model.VoucherConditions[j].VoucherConditionId)
                         {
                             source.VoucherConditions[i].Amount = model.VoucherConditions[j].Amount;
                             flag = false;
@@ -206,26 +207,26 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
             // новые записи
             for (int i = 0; i < model.VoucherConditions.Count; ++i)
             {
-                if (model.VoucherConditions[i].Id == 0)
+                if (model.VoucherConditions[i].VoucherConditionId == 0)
                 {
                     // ищем дубли
                     for (int j = 0; j < source.VoucherConditions.Count; ++j)
                     {
-                        if (source.VoucherConditions[j].VoucherId == model.Id &&
+                        if (source.VoucherConditions[j].VoucherId == model.VoucherId &&
                         source.VoucherConditions[j].ConditionId == model.VoucherConditions[i].ConditionId)
                         {
                             source.VoucherConditions[j].Amount += model.VoucherConditions[i].Amount;
-                            model.VoucherConditions[i].Id = source.VoucherConditions[j].Id;
+                            model.VoucherConditions[i].VoucherConditionId = source.VoucherConditions[j].VoucherConditionId;
                             break;
                         }
                     }
                     // если не нашли дубли, то новая запись
-                    if (model.VoucherConditions[i].Id == 0)
+                    if (model.VoucherConditions[i].VoucherConditionId == 0)
                     {
                         source.VoucherConditions.Add(new VoucherCondition
                         {
-                            Id = ++maxPCId,
-                            VoucherId = model.Id,
+                            VoucherConditionId = ++maxPCId,
+                            VoucherId = model.VoucherId,
                             ConditionId = model.VoucherConditions[i].ConditionId,
                             Amount = model.VoucherConditions[i].Amount
                         });
@@ -246,7 +247,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
             }
             for (int i = 0; i < source.Vouchers.Count; ++i)
             {
-                if (source.Vouchers[i].Id == id)
+                if (source.Vouchers[i].VoucherId == id)
                 {
                     source.Vouchers.RemoveAt(i);
                     return;

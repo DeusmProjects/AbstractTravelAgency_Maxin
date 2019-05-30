@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AbstractTravelAgencyModel
+namespace AbstractTravelAgencyServiceDAL.ViewModel
 {
     public class VoucherConditionViewModel
     {
-        public int Id { get; set; }
+        public int VoucherConditionId { get; set; }
 
         public int VoucherId { get; set; }
 

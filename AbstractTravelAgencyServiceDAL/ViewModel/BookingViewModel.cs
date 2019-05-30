@@ -9,7 +9,7 @@ namespace AbstractTravelAgencyServiceDAL.ViewModel
 {
     public class BookingViewModel
     {
-        public int Id { get; set; }
+        public int BookingId { get; set; }
 
         public int CustomerId { get; set; }
 
@@ -18,7 +18,7 @@ namespace AbstractTravelAgencyServiceDAL.ViewModel
 
         public int VoucherId { get; set; }
 
-        [DisplayName("Продукт")]
+        [DisplayName("Путевка")]
         public string VoucherName { get; set; }
 
         [DisplayName("Количество")]
