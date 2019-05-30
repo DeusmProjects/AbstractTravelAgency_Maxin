@@ -47,6 +47,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
                 Id = maxId + 1,
                 CustomerId = model.CustomerId,
                 VoucherId = model.VoucherId,
+                ExecutorId = model.ExecutorId,
                 DateCreateBooking = DateTime.Now,
                 Amount = model.Amount,
                 TotalSum = model.TotalSum,
@@ -150,6 +151,11 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
                     Amount = model.Amount
                 });
             }
+        }
+
+        public List<BookingViewModel> GetFreeBookings()
+        {
+            return null;
         }
     }
 }

@@ -62,6 +62,7 @@
     <Compile Include="AbstractDbScope.cs" />
     <Compile Include="Implementations\CityServiceDB.cs" />
     <Compile Include="Implementations\ConditionServiceDB.cs" />
+    <Compile Include="Implementations\ExecutorServiceDB.cs" />
     <Compile Include="Implementations\MainServiceDB.cs" />
     <Compile Include="Implementations\ReportServiceDB.cs" />
     <Compile Include="Implementations\VoucherServiceDB.cs" />
@@ -73,6 +74,10 @@
     <Compile Include="Migrations\201903300818217_SecondMigration.cs" />
     <Compile Include="Migrations\201903300818217_SecondMigration.Designer.cs">
       <DependentUpon>201903300818217_SecondMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904270512553_migrat.cs" />
+    <Compile Include="Migrations\201904270512553_migrat.Designer.cs">
+      <DependentUpon>201904270512553_migrat.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -103,6 +108,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903300818217_SecondMigration.resx">
       <DependentUpon>201903300818217_SecondMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904270512553_migrat.resx">
+      <DependentUpon>201904270512553_migrat.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

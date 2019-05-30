@@ -143,6 +143,18 @@
     <Compile Include="FormCreateBooking.Designer.cs">
       <DependentUpon>FormCreateBooking.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormExecutor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormExecutor.Designer.cs">
+      <DependentUpon>FormExecutor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormExecutors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormExecutors.Designer.cs">
+      <DependentUpon>FormExecutors.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -202,6 +214,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormCreateBooking.resx">
       <DependentUpon>FormCreateBooking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormExecutor.resx">
+      <DependentUpon>FormExecutor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormExecutors.resx">
+      <DependentUpon>FormExecutors.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>

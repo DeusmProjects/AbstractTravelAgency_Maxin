@@ -106,6 +106,7 @@
             // 
             this.textBoxSum.Location = new System.Drawing.Point(129, 167);
             this.textBoxSum.Name = "textBoxSum";
+            this.textBoxSum.ReadOnly = true;
             this.textBoxSum.Size = new System.Drawing.Size(308, 22);
             this.textBoxSum.TabIndex = 7;
             // 

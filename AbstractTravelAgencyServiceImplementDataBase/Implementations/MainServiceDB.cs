@@ -40,11 +40,14 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
                 Amount = rec.Amount,
                 TotalSum = rec.TotalSum,
                 CustomerFIO = rec.Customer.CustomerFIO,
-                VoucherName = rec.Voucher.VoucherName
+                VoucherName = rec.Voucher.VoucherName,
+                ExecutorId = rec.ExecutorId,
+                ExecutorName = rec.Executor.ExecutorFIO
             })
             .ToList();
             return result;
         }
+
         public void CreateBooking(BookingBindingModel model)
         {
             scope.Bookings.Add(new Booking
@@ -54,7 +57,8 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
                 DateCreateBooking = DateTime.Now,
                 Amount = model.Amount,
                 TotalSum = model.TotalSum,
-                StatusBooking = BookingStatus.Принят
+                StatusBooking = BookingStatus.Принят,
+                ExecutorId = model.ExecutorId
             });
             scope.SaveChanges();
         }
@@ -107,6 +111,7 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
                          }
                     }
                     element.DateImplementBooking = DateTime.Now;
+                    element.ExecutorId = model.ExecutorId;
                     element.StatusBooking = BookingStatus.Выполняется;
                     scope.SaveChanges();
                     transaction.Commit();
@@ -164,6 +169,19 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
                 });
             }
             scope.SaveChanges();
+        }
+
+        public List<BookingViewModel> GetFreeBookings()
+        {
+            List<BookingViewModel> result = scope.Bookings
+             .Where(x => x.StatusBooking == BookingStatus.Принят || x.StatusBooking ==
+            BookingStatus.НедостаточноРесурсов)
+             .Select(rec => new BookingViewModel
+             {
+                 Id = rec.Id
+             })
+             .ToList();
+            return result;
         }
     }
 }
