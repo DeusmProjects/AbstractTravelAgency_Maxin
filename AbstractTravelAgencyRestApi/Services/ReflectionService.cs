@@ -26,14 +26,17 @@ namespace AbstractTravelAgencyRestApi.Services
             }
             return infoes;
         }
+
         private Assembly GetAssembly(string assemblyName)
         {
             return Assembly.Load(assemblyName);
         }
+
         private List<Type> GetInterfases(Assembly assembly)
         {
             return assembly.GetTypes().Where(x => x.IsInterface).ToList();
         }
+
         private List<string> GetMethodInfoes(Type inter)
         {
             List<string> infoes = new List<string>();
