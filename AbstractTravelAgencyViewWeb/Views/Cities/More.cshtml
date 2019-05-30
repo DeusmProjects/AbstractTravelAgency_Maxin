@@ -19,15 +19,15 @@
 
         @foreach (var item in Model.CityConditions)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ConditionName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
-                </td>
-                <td></td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConditionName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td></td>
+        </tr>
         }
 
     </table>
