@@ -1,0 +1,32 @@
+﻿@model IEnumerable<AbstractTravelAgencyServiceDAL.ViewModel.ConditionViewModel>
+
+@{
+    ViewBag.Title = "Список условий";
+}
+
+<h2>Список условий</h2>
+
+<p>
+    @Html.ActionLink("Добавить условие", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ConditionName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ConditionName)
+        </td>
+        <td>
+            @Html.ActionLink("Изменить", "Edit", new { id = item.ConditionId }) |
+            @Html.ActionLink("Удалить", "Delete", new { id = item.ConditionId })
+        </td>
+    </tr>
+}
+
+</table>

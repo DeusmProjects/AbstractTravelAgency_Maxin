@@ -1,0 +1,78 @@
+﻿@using AbstractTravelAgencyModel
+@model AbstractTravelAgencyServiceDAL.ViewModel.VoucherViewModel
+
+@{
+    ViewBag.Title = "Создание путевки";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Создание путевки</h2>
+
+
+@using (Html.BeginForm("CreateVoucherPost", "Voucher", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.VoucherName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.VoucherName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.VoucherName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Cost, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Cost, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Cost, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p>
+                @Html.ActionLink("Добавить условие", "AddCondition")
+            </p>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.VoucherConditions[0].ConditionName)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.VoucherConditions)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ConditionName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                        <td></td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Создать" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Вернуться к списку путевок", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

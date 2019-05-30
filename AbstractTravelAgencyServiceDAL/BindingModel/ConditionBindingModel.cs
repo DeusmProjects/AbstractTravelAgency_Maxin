@@ -8,7 +8,8 @@ namespace AbstractTravelAgencyServiceDAL.BindingModel
 {
     public class ConditionBindingModel
     {
-        public int Id { get; set; }
+        public int ConditionId { get; set; }
+
         public string ConditionName { get; set; }
     }
 }
