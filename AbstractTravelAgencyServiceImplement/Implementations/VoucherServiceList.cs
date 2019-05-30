@@ -55,7 +55,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
             }
             return result;
         }
-
+        
         public VoucherViewModel GetElement(int id)
         {
             for (int i = 0; i < source.Vouchers.Count; ++i)
