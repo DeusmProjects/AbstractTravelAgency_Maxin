@@ -40,8 +40,7 @@ namespace AbstractTravelAgencyRestApi.Services
             MethodInfo[] methods = inter.GetMethods();
             for (int i = 0; i < methods.Length; ++i)
             {
-                CustomAttributeData attr = methods[i].CustomAttributes.FirstOrDefault(x
-               => x.AttributeType.Name == "CustomMethodAttribute");
+                CustomAttributeData attr = methods[i].CustomAttributes.FirstOrDefault(x => x.AttributeType.Name == "CustomMethodAttribute");
                 if (attr != null)
                 {
                     infoes.Add(string.Format("--> Метод: {0}. {1}", methods[i].Name,
