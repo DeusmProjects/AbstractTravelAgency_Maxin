@@ -10,6 +10,7 @@ namespace AbstractTravelAgencyViewWeb.Controllers
 
         public ActionResult List()
         {
+            //ViewBag.Cities = service.GetList();
             return View(service.GetList());
         }
 
@@ -50,9 +51,11 @@ namespace AbstractTravelAgencyViewWeb.Controllers
             return RedirectToAction("List");
         }
 
-        public ActionResult More()
+        public ActionResult More(int id)
         {
-            return View();
+            var viewModel = service.GetElement(id);
+            
+            return View(viewModel);
         }
 
         public ActionResult Delete(int id)

@@ -193,7 +193,6 @@
     <Content Include="Views\Cities\Create.cshtml" />
     <Content Include="Views\Cities\Edit.cshtml" />
     <Content Include="Views\PutCity\Index.cshtml" />
-    <Content Include="Views\Cities\Details.cshtml" />
     <Content Include="Views\Cities\More.cshtml" />
   </ItemGroup>
   <ItemGroup>

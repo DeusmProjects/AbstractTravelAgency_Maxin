@@ -1,10 +1,10 @@
 ﻿@model AbstractTravelAgencyServiceDAL.ViewModel.CityViewModel
 
 @{
-    ViewBag.Title = "More";
+    ViewBag.Title = "Подробнее";
 }
 
-<h2>More</h2>
+<h2>Подробнее</h2>
 
 <div>
     <table class="table">
@@ -33,6 +33,6 @@
     </table>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Изменить", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Вернуться к списку городов", "List")
 </p>
