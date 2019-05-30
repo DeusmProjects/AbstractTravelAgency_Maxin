@@ -24,15 +24,15 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
             List<CityViewModel> result = source.Cities
             .Select(rec => new CityViewModel
             {
-                Id = rec.Id,
+                CityId = rec.CityId,
                 CityName = rec.CityName,
-                CityConditions = source.CityConditions.Where(recPC => recPC.CityId == rec.Id)
+                CityConditions = source.CityConditions.Where(recPC => recPC.CityId == rec.CityId)
                 .Select(recPC => new CityConditionViewModel
                    {
-                       Id = recPC.Id,
+                       CityConditionId = recPC.CityConditionId,
                        CityId = recPC.CityId,
                        ConditionId = recPC.ConditionId,
-                       ConditionName = source.Conditions.FirstOrDefault(recC => recC.Id == recPC.ConditionId)?.ConditionName,
+                       ConditionName = source.Conditions.FirstOrDefault(recC => recC.ConditionId == recPC.ConditionId)?.ConditionName,
                        Amount = recPC.Amount
                    }).ToList()
             }).ToList();
@@ -41,20 +41,20 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
 
         public CityViewModel GetElement(int id)
         {
-            City element = source.Cities.FirstOrDefault(rec => rec.Id == id);
+            City element = source.Cities.FirstOrDefault(rec => rec.CityId == id);
             if (element != null)
             {
                 return new CityViewModel
                 {
-                    Id = element.Id,
+                    CityId = element.CityId,
                     CityName = element.CityName,
-                    CityConditions = source.CityConditions.Where(recPC => recPC.CityId == element.Id)
+                    CityConditions = source.CityConditions.Where(recPC => recPC.CityId == element.CityId)
                     .Select(recPC => new CityConditionViewModel
                        {
-                           Id = recPC.Id,
+                           CityConditionId = recPC.CityConditionId,
                            CityId = recPC.CityId,
                            ConditionId = recPC.ConditionId,
-                           ConditionName = source.Conditions.FirstOrDefault(recC => recC.Id == recPC.ConditionId)?.ConditionName,
+                           ConditionName = source.Conditions.FirstOrDefault(recC => recC.ConditionId == recPC.ConditionId)?.ConditionName,
                            Amount = recPC.Amount
                        }).ToList()
                 };
@@ -69,10 +69,10 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
             {
                 throw new Exception("Уже есть город с таким названием");
             }
-            int maxId = source.Cities.Count > 0 ? source.Cities.Max(rec => rec.Id) : 0;
+            int maxId = source.Cities.Count > 0 ? source.Cities.Max(rec => rec.CityId) : 0;
             source.Cities.Add(new City
             {
-                Id = maxId + 1,
+                CityId = maxId + 1,
                 CityName = model.CityName
             });
         }
@@ -80,12 +80,12 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
         public void UpdElement(CityBindingModel model)
         {
             City element = source.Cities.FirstOrDefault(rec =>
-            rec.CityName == model.CityName && rec.Id != model.Id);
+            rec.CityName == model.CityName && rec.CityId != model.CityId);
             if (element != null)
             {
                 throw new Exception("Уже есть город с таким названием");
             }
-            element = source.Cities.FirstOrDefault(rec => rec.Id == model.Id);
+            element = source.Cities.FirstOrDefault(rec => rec.CityId == model.CityId);
             if (element == null)
             {
                 throw new Exception("Элемент не найден");
@@ -95,7 +95,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
 
         public void DelElement(int id)
         {
-            City element = source.Cities.FirstOrDefault(rec => rec.Id == id);
+            City element = source.Cities.FirstOrDefault(rec => rec.CityId == id);
             if (element != null)
             {
                 // при удалении удаляем все записи о компонентах на удаляемом городе

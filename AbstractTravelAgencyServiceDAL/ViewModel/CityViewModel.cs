@@ -9,7 +9,7 @@ namespace AbstractTravelAgencyServiceDAL.ViewModel
 {
     public class CityViewModel
     {
-        public int Id { get; set; }
+        public int CityId { get; set; }
 
         [DisplayName("Название города")]
         public string CityName { get; set; }

@@ -4,6 +4,7 @@ using AbstractTravelAgencyServiceDAL.Interfaces;
 using AbstractTravelAgencyServiceDAL.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AbstractTravelAgencyServiceImplement.Implementations
 {
@@ -20,7 +21,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
         {
             List<ConditionViewModel> result = source.Conditions.Select(rec => new ConditionViewModel
             {
-                ConditionId = rec.Id,
+                ConditionId = rec.ConditionId,
                 ConditionName = rec.ConditionName
             })
             .ToList();
@@ -29,15 +30,14 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
 
         public ConditionViewModel GetElement(int id)
         {
-            Condition element = source.Conditions.FirstOrDefault(rec => rec.Id == id);
+            Condition element = source.Conditions.FirstOrDefault(rec => rec.ConditionId == id);
             if (element != null)
             {
                 return new ConditionViewModel
                 {
-                    ConditionId = element.Id,
+                    ConditionId = element.ConditionId,
                     ConditionName = element.ConditionName
                 };
-            }
             }
             throw new Exception("Элемент не найден");
         }
@@ -50,7 +50,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
             {
             throw new Exception("Уже есть такое условие");
         }
-            int maxId = source.Conditions.Count > 0 ? source.Conditions.Max(rec => rec.Id) : 0;
+            int maxId = source.Conditions.Count > 0 ? source.Conditions.Max(rec => rec.ConditionId) : 0;
             source.Conditions.Add(new Condition
             {
                 ConditionId = maxId + 1,
@@ -60,13 +60,13 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
 
         public void UpdElement(ConditionBindingModel model)
         {
-        Condition element = source.Conditions.FirstOrDefault(rec => rec.ConditionName
-        == model.ConditionName && rec.ConditionId != model.ConditionId);
-        if (element != null)
-        {
-            throw new Exception("Уже есть условие с таким названием");
-        }
-        element = source.Conditions.FirstOrDefault(rec => rec.Id == model.Id);
+            Condition element = source.Conditions.FirstOrDefault(rec => rec.ConditionName == model.ConditionName && rec.ConditionId != model.ConditionId);
+            if (element != null)
+            {
+                throw new Exception("Уже есть условие с таким названием");
+            }
+
+            element = source.Conditions.FirstOrDefault(rec => rec.ConditionId == model.ConditionId);
             if (element == null)
             {
                 throw new Exception("Элемент не найден");

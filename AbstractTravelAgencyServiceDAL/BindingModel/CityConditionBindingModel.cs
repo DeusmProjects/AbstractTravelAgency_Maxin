@@ -8,9 +8,12 @@ namespace AbstractTravelAgencyServiceDAL.BindingModel
 {
     public class CityConditionBindingModel
     {
-        public int Id { get; set; }
+        public int CityConditionId { get; set; }
+
         public int CityId { get; set; }
+
         public int ConditionId { get; set; }
+
         public int Amount { get; set; }
     }
 }

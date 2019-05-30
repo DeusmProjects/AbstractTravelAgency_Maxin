@@ -4,6 +4,7 @@ using AbstractTravelAgencyServiceDAL.Interfaces;
 using AbstractTravelAgencyServiceDAL.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AbstractTravelAgencyServiceImplement.Implementations
 {
@@ -18,86 +19,53 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
 
         public List<VoucherViewModel> GetList()
         {
-            List<VoucherViewModel> result = new List<VoucherViewModel>();
-            for (int i = 0; i < source.Vouchers.Count; ++i)
-            {
-                List<VoucherConditionViewModel> voucherConditions = new List<VoucherConditionViewModel>();
-                for (int j = 0; j < source.VoucherConditions.Count; ++j)
+            List<VoucherViewModel> result = source.Vouchers
+                .Select(rec => new VoucherViewModel
                 {
-                    if (source.VoucherConditions[j].VoucherId == source.Vouchers[i].Id)
-                    {
-                        string conditionName = string.Empty;
-                        for (int k = 0; k < source.Conditions.Count; ++k)
+                    VoucherId = rec.VoucherId,
+                    VoucherName = rec.VoucherName,
+                    Cost = rec.Cost,
+                    VoucherConditions = source.VoucherConditions
+                        .Where(recPC => recPC.VoucherId == rec.VoucherId)
+                        .Select(recPC => new VoucherConditionViewModel
                         {
-                            if (source.VoucherConditions[j].ConditionId == source.Conditions[k].Id)
-                            {
-                                conditionName = source.Conditions[k].ConditionName;
-                                break;
-                            }
-                        }
-                        voucherConditions.Add(new VoucherConditionViewModel
-                        {
-                            Id = source.VoucherConditions[j].Id,
-                            VoucherId = source.VoucherConditions[j].VoucherId,
-                            ConditionId = source.VoucherConditions[j].ConditionId,
-                            ConditionName = conditionName,
-                            Amount = source.VoucherConditions[j].Amount
-                        });
-                    }
-                }
-                result.Add(new VoucherViewModel
-                {
-                    Id = source.Vouchers[i].Id,
-                    VoucherName = source.Vouchers[i].VoucherName,
-                    Cost = source.Vouchers[i].Cost,
-                    VoucherCondition = voucherConditions
-                });
-            }
+                            VoucherConditionId = recPC.VoucherConditionId,
+                            VoucherId = recPC.VoucherId,
+                            ConditionId = recPC.ConditionId,
+                            ConditionName = source.Conditions.FirstOrDefault(recC =>
+                            recC.ConditionId == recPC.ConditionId)?.ConditionName,
+                            Amount = recPC.Amount
+                        })
+                        .ToList()
+                })
+                .ToList();
             return result;
         }
 
         public VoucherViewModel GetElement(int id)
         {
-            Voucher element = source.Vouchers.FirstOrDefault(rec => rec.Id == id);
+            Voucher element = source.Vouchers.FirstOrDefault(rec => rec.VoucherId == id);
             if (element != null)
             {
-                List<VoucherConditionViewModel> voucherConditions = new List<VoucherConditionViewModel>();
-                for (int j = 0; j < source.VoucherConditions.Count; ++j)
+                return new VoucherViewModel
                 {
-                    if (source.VoucherConditions[j].VoucherId == source.Vouchers[i].Id)
-                    {
-                        string conditionName = string.Empty;
-                        for (int k = 0; k < source.Conditions.Count; ++k)
+                    VoucherId = element.VoucherId,
+                    VoucherName = element.VoucherName,
+                    Cost = element.Cost,
+                    VoucherConditions = source.VoucherConditions
+                        .Where(recPC => recPC.VoucherId == element.VoucherId)
+                        .Select(recPC => new VoucherConditionViewModel
                         {
-                            if (source.VoucherConditions[j].ConditionId == source.Conditions[k].Id)
-                            {
-                                conditionName = source.Conditions[k].ConditionName;
-                                break;
-                            }
-                        }
-                        voucherConditions.Add(new VoucherConditionViewModel
-                        {
-                            Id = source.VoucherConditions[j].Id,
-                            VoucherId = source.VoucherConditions[j].VoucherId,
-                            ConditionId = source.VoucherConditions[j].ConditionId,
-                            ConditionName = conditionName,
-                            Amount = source.VoucherConditions[j].Amount
-                        });
-                    }
-                }
-                if (source.Vouchers[i].Id == id)
-                {
-                    return new VoucherViewModel
-                    {
-                        Id = source.Vouchers[i].Id,
-                        VoucherName = source.Vouchers[i].VoucherName,
-                        Cost = source.Vouchers[i].Cost,
-                        VoucherCondition = voucherConditions
-                    };
-                }
+                            VoucherConditionId = recPC.VoucherConditionId,
+                            VoucherId = recPC.VoucherId,
+                            ConditionId = recPC.ConditionId,
+                            ConditionName = source.Conditions.FirstOrDefault(recC => recC.ConditionId == recPC.ConditionId)?.ConditionName,
+                            Amount = recPC.Amount
+                        })
+                       .ToList()
+                };
             }
             throw new Exception("Элемент не найден");
-
         }
 
         public void AddElement(VoucherBindingModel model)
@@ -105,15 +73,9 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
             Voucher element = source.Vouchers.FirstOrDefault(rec => rec.VoucherName == model.VoucherName);
             if (element != null)
             {
-                if (source.Vouchers[i].Id > maxId)
-                {
-                    maxId = source.Vouchers[i].Id;
-                }
-                if (source.Vouchers[i].VoucherName == model.VoucherName)
-                {
-                    throw new Exception("Уже есть изделие с таким названием");
-                }
+                throw new Exception("Уже есть изделие с таким названием");
             }
+            int maxId = source.Vouchers.Count > 0 ? source.Vouchers.Max(rec => rec.VoucherId) : 0;
             source.Vouchers.Add(new Voucher
             {
                 VoucherId = maxId + 1,
@@ -121,22 +83,15 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
                 Cost = model.Cost
             });
             // компоненты для изделия
-            int maxPCId = 0;
-            for (int i = 0; i < source.VoucherConditions.Count; ++i)
-            {
-                if (source.VoucherConditions[i].Id > maxPCId)
-                {
-                    maxPCId = source.VoucherConditions[i].Id;
-                }
-            }
+            int maxPCId = source.VoucherConditions.Count > 0 ? source.VoucherConditions.Max(rec => rec.VoucherId) : 0;
             // убираем дубли по компонентам
             var groupConditions = model.VoucherConditions
                                   .GroupBy(rec => rec.ConditionId)
                                   .Select(rec => new
-                                   {
-                                       ConditionId = rec.Key,
-                                       Amount = rec.Sum(r => r.Amount)
-                                   });
+                                  {
+                                      ConditionId = rec.Key,
+                                      Amount = rec.Sum(r => r.Amount)
+                                  });
             // добавляем компоненты
             foreach (var groupCondition in groupConditions)
             {
@@ -152,103 +107,70 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
 
         public void UpdElement(VoucherBindingModel model)
         {
-            int index = -1;
-            for (int i = 0; i < source.Vouchers.Count; ++i)
+            Voucher element = source.Vouchers.FirstOrDefault(rec => rec.VoucherName ==
+            model.VoucherName && rec.VoucherId != model.VoucherId);
+            if (element != null)
             {
-                if (source.Vouchers[i].Id == model.Id)
-                {
-                    index = i;
-                }
-                if (source.Vouchers[i].VoucherName == model.VoucherName && source.Vouchers[i].Id != model.Id)
-                {
-                    throw new Exception("Уже есть изделие с таким названием");
-                }
+                throw new Exception("Уже есть путевка с таким названием");
             }
-            element = source.Vouchers.FirstOrDefault(rec => rec.Id == model.Id);
+            element = source.Vouchers.FirstOrDefault(rec => rec.VoucherId == model.VoucherId);
             if (element == null)
             {
                 throw new Exception("Элемент не найден");
             }
-            source.Vouchers[index].VoucherName = model.VoucherName;
-            source.Vouchers[index].Cost = model.Cost;
-            int maxPCId = 0;
-            for (int i = 0; i < source.VoucherConditions.Count; ++i)
-            {
-                if (source.VoucherConditions[i].Id > maxPCId)
-                {
-                    maxPCId = source.VoucherConditions[i].Id;
-                }
-            }
+            element.VoucherName = model.VoucherName;
+            element.Cost = model.Cost;
+            int maxPCId = source.VoucherConditions.Count > 0 ? source.VoucherConditions.Max(rec => rec.VoucherConditionId) : 0;
             // обновляем существуюущие компоненты
-            for (int i = 0; i < source.VoucherConditions.Count; ++i)
+            var compIds = model.VoucherConditions.Select(rec => rec.ConditionId).Distinct();
+            var updateConditions = source.VoucherConditions.Where(rec => rec.VoucherId ==
+             model.VoucherId && compIds.Contains(rec.ConditionId));
+            foreach (var updateCondition in updateConditions)
             {
-                if (source.VoucherConditions[i].VoucherId == model.Id)
-                {
-                    bool flag = true;
-                    for (int j = 0; j < model.VoucherConditions.Count; ++j)
-                    {
-                        // если встретили, то изменяем количество
-                        if (source.VoucherConditions[i].Id == model.VoucherConditions[j].Id)
-                        {
-                            source.VoucherConditions[i].Amount = model.VoucherConditions[j].Amount;
-                            flag = false;
-                            break;
-                        }
-                    }
-                    // если не встретили, то удаляем
-                    if (flag)
-                    {
-                        source.VoucherConditions.RemoveAt(i--);
-                    }
-                }
+                updateCondition.Amount = model.VoucherConditions.FirstOrDefault(rec => rec.VoucherConditionId == updateCondition.VoucherConditionId).Amount;
             }
-            source.VoucherConditions.RemoveAll(rec => rec.VoucherId == model.Id && !compIds.Contains(rec.ConditionId));
+            source.VoucherConditions.RemoveAll(rec => rec.VoucherId == model.VoucherId && !compIds.Contains(rec.ConditionId));
             // новые записи
-            for (int i = 0; i < model.VoucherConditions.Count; ++i)
+            var groupConditions = model.VoucherConditions
+                                    .Where(rec => rec.VoucherConditionId == 0)
+                                    .GroupBy(rec => rec.ConditionId)
+                                    .Select(rec => new
+                                    {
+                                        ConditionId = rec.Key,
+                                        Amount = rec.Sum(r => r.Amount)
+                                    });
+            foreach (var groupCondition in groupConditions)
             {
-                if (model.VoucherConditions[i].Id == 0)
+                VoucherCondition elementPC = source.VoucherConditions.FirstOrDefault(rec =>
+                    rec.VoucherId == model.VoucherId && rec.ConditionId == groupCondition.ConditionId);
+                if (elementPC != null)
                 {
-                    // ищем дубли
-                    for (int j = 0; j < source.VoucherConditions.Count; ++j)
+                    elementPC.Amount += groupCondition.Amount;
+                }
+                else
+                {
+                    source.VoucherConditions.Add(new VoucherCondition
                     {
-                        if (source.VoucherConditions[j].VoucherId == model.Id &&
-                        source.VoucherConditions[j].ConditionId == model.VoucherConditions[i].ConditionId)
-                        {
-                            source.VoucherConditions[j].Amount += model.VoucherConditions[i].Amount;
-                            model.VoucherConditions[i].Id = source.VoucherConditions[j].Id;
-                            break;
-                        }
-                    }
-                    // если не нашли дубли, то новая запись
-                    if (model.VoucherConditions[i].Id == 0)
-                    {
-                        source.VoucherConditions.Add(new VoucherCondition
-                        {
-                            Id = ++maxPCId,
-                            VoucherId = model.Id,
-                            ConditionId = model.VoucherConditions[i].ConditionId,
-                            Amount = model.VoucherConditions[i].Amount
-                        });
-                    }
+                        VoucherConditionId = ++maxPCId,
+                        VoucherId = model.VoucherId,
+                        ConditionId = groupCondition.ConditionId,
+                        Amount = groupCondition.Amount
+                    });
                 }
             }
         }
 
         public void DelElement(int id)
         {
-            Voucher element = source.Vouchers.FirstOrDefault(rec => rec.Id == id);
+            Voucher element = source.Vouchers.FirstOrDefault(rec => rec.VoucherId == id);
             if (element != null)
             {
                 source.VoucherConditions.RemoveAll(rec => rec.VoucherId == id);
                 source.Vouchers.Remove(element);
             }
-            for (int i = 0; i < source.Vouchers.Count; ++i)
+            else
             {
-                if (source.Vouchers[i].Id == id)
-                {
-                    source.Vouchers.RemoveAt(i);
-                    return;
-                }
+                throw new Exception("Элемент не найден");
             }
         }
     }
