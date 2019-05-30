@@ -19,5 +19,6 @@ namespace AbstractTravelAgencyServiceDAL.Interfaces
         void FinishBooking(BookingBindingModel model);
 
         void PayBooking(BookingBindingModel model);
+        void PutConditionOnCity(CityConditionBindingModel model);
     }
 }

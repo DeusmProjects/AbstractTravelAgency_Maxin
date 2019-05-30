@@ -18,12 +18,11 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
 
         public List<CustomerViewModel> GetList()
         {
-            List<CustomerViewModel> result = new List<CustomerViewModel>();
-            for (int i = 0; i < source.Customers.Count; ++i)
+            List<CustomerViewModel> result = source.Customers.Select(rec => new CustomerViewModel
             {
                 result.Add(new CustomerViewModel
                 {
-                    CustomerId = source.Customers[i].CustomerId,
+                    Id = source.Customers[i].Id,
                     CustomerFIO = source.Customers[i].CustomerFIO
                 });
             }
@@ -32,13 +31,14 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
 
         public CustomerViewModel GetElement(int id)
         {
-            for (int i = 0; i < source.Customers.Count; ++i)
+            Customer element = source.Customers.FirstOrDefault(rec => rec.Id == id);
+            if (element != null)
             {
-                if (source.Customers[i].CustomerId == id)
+                if (source.Customers[i].Id == id)
                 {
                     return new CustomerViewModel
                     {
-                        CustomerId = source.Customers[i].CustomerId,
+                        Id = source.Customers[i].Id,
                         CustomerFIO = source.Customers[i].CustomerFIO
                     };
                 }
@@ -51,9 +51,9 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
             int maxId = 0;
             for (int i = 0; i < source.Customers.Count; ++i)
             {
-                if (source.Customers[i].CustomerId > maxId)
+                if (source.Customers[i].Id > maxId)
                 {
-                    maxId = source.Customers[i].CustomerId;
+                    maxId = source.Customers[i].Id;
                 }
                 if (source.Customers[i].CustomerFIO == model.CustomerFIO)
                 {
@@ -69,15 +69,16 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
 
         public void UpdElement(CustomerBindingModel model)
         {
-            int index = -1;
-            for (int i = 0; i < source.Customers.Count; ++i)
+            Customer element = source.Customers.FirstOrDefault(rec => rec.CustomerFIO == 
+            model.CustomerFIO && rec.Id != model.Id);
+            if (element != null)
             {
-                if (source.Customers[i].CustomerId == model.CustomerId)
+                if (source.Customers[i].Id == model.Id)
                 {
                     index = i;
                 }
                 if (source.Customers[i].CustomerFIO == model.CustomerFIO &&
-                source.Customers[i].CustomerId != model.CustomerId)
+                source.Customers[i].Id != model.Id)
                 {
                     throw new Exception("Уже есть клиент с таким ФИО");
                 }
@@ -86,20 +87,23 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
             {
                 throw new Exception("Элемент не найден");
             }
-            source.Customers[index].CustomerFIO = model.CustomerFIO;
+            element.CustomerFIO = model.CustomerFIO;
         }
 
         public void DelElement(int id)
         {
             for (int i = 0; i < source.Customers.Count; ++i)
             {
-                if (source.Customers[i].CustomerId == id)
+                if (source.Customers[i].Id == id)
                 {
                     source.Customers.RemoveAt(i);
                     return;
                 }
             }
-            throw new Exception("Элемент не найден");
+            else
+            {
+                throw new Exception("Элемент не найден");
+            }
         }
     }
 }

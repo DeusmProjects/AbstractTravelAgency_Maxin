@@ -21,6 +21,10 @@ namespace AbstractTravelAgencyServiceImplement
 
         public List<VoucherCondition> VoucherConditions { get; set; }
 
+        public List<City> Cities { get; set; }
+
+        public List<CityCondition> CityConditions { get; set; }
+
         private DataListSingleton()
         {
             Customers = new List<Customer>();
@@ -28,6 +32,8 @@ namespace AbstractTravelAgencyServiceImplement
             Bookings = new List<Booking>();
             Vouchers = new List<Voucher>();
             VoucherConditions = new List<VoucherCondition>();
+            Cities = new List<City>();
+            CityConditions = new List<CityCondition>();
         }
         public static DataListSingleton GetInstance()
         {

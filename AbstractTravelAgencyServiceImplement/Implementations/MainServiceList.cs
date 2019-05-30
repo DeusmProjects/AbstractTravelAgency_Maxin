@@ -27,7 +27,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
                 string clientFIO = string.Empty;
                 for (int j = 0; j < source.Customers.Count; ++j)
                 {
-                    if (source.Customers[j].CustomerId == source.Bookings[i].CustomerId)
+                    if (source.Customers[j].Id == source.Bookings[i].CustomerId)
                     {
                         clientFIO = source.Customers[j].CustomerFIO;
                         break;
@@ -36,7 +36,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
                 string voucherName = string.Empty;
                 for (int j = 0; j < source.Vouchers.Count; ++j)
                 {
-                    if (source.Vouchers[j].VoucherId == source.Bookings[i].VoucherId)
+                    if (source.Vouchers[j].Id == source.Bookings[i].VoucherId)
                     {
                         voucherName = source.Vouchers[j].VoucherName;
                         break;
@@ -44,7 +44,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
                 }
                 result.Add(new BookingViewModel
                 {
-                    BookingId = source.Bookings[i].BookingId,
+                    Id = source.Bookings[i].Id,
                     CustomerId = source.Bookings[i].CustomerId,
                     CustomerFIO = clientFIO,
                     VoucherId = source.Bookings[i].VoucherId,
@@ -64,9 +64,9 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
             int maxId = 0;
             for (int i = 0; i < source.Bookings.Count; ++i)
             {
-                if (source.Bookings[i].BookingId > maxId)
+                if (source.Bookings[i].Id > maxId)
                 {
-                    maxId = source.Customers[i].CustomerId;
+                    maxId = source.Customers[i].Id;
                 }
             }
             source.Bookings.Add(new Booking
@@ -74,18 +74,19 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
                 BookingId = maxId + 1,
                 CustomerId = model.CustomerId,
                 VoucherId = model.VoucherId,
-                DataCreateBooking = DateTime.Now,
+                DateCreateBooking = DateTime.Now,
                 Amount = model.Amount,
                 TotalSum = model.TotalSum,
                 StatusBooking = BookingStatus.Принят
             });
+
         }
         public void TakeBookingInWork(BookingBindingModel model)
         {
-            int index = -1;
-            for (int i = 0; i < source.Bookings.Count; ++i)
+            Booking element = source.Bookings.FirstOrDefault(rec => rec.Id == model.Id);
+            if (element == null)
             {
-                if (source.Bookings[i].BookingId == model.BookingId)
+                if (source.Bookings[i].Id == model.Id)
                 {
                     index = i;
                     break;
@@ -108,7 +109,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
             int index = -1;
             for (int i = 0; i < source.Bookings.Count; ++i)
             {
-                if (source.Customers[i].CustomerId == model.CustomerId)
+                if (source.Customers[i].Id == model.Id)
                 {
                     index = i;
                     break;
@@ -118,19 +119,19 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
             {
                 throw new Exception("Элемент не найден");
             }
-            if (source.Bookings[index].StatusBooking != BookingStatus.Выполняется)
+            if (element.StatusBooking != BookingStatus.Выполняется)
             {
                 throw new Exception("Заказ не в статусе \"Выполняется\"");
             }
-            source.Bookings[index].StatusBooking = BookingStatus.Готов;
+            element.StatusBooking = BookingStatus.Готов;
         }
 
         public void PayBooking(BookingBindingModel model)
         {
-            int index = -1;
-            for (int i = 0; i < source.Bookings.Count; ++i)
+            Booking element = source.Bookings.FirstOrDefault(rec => rec.Id == model.Id);
+            if (element == null)
             {
-                if (source.Customers[i].CustomerId == model.CustomerId)
+                if (source.Customers[i].Id == model.Id)
                 {
                     index = i;
                     break;
@@ -138,13 +139,19 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
             }
             if (index == -1)
             {
-                throw new Exception("Элемент не найден");
+                element.Amount += model.Amount;
             }
-            if (source.Bookings[index].StatusBooking != BookingStatus.Готов)
+            else
             {
-                throw new Exception("Заказ не в статусе \"Готов\"");
+                int maxId = source.CityConditions.Count > 0 ? source.CityConditions.Max(rec => rec.Id) : 0;
+                source.CityConditions.Add(new CityCondition
+                {
+                    Id = ++maxId,
+                    CityId = model.CityId,
+                    ConditionId = model.ConditionId,
+                    Amount = model.Amount
+                });
             }
-            source.Bookings[index].StatusBooking = BookingStatus.Оплачен;
         }
     }
 }

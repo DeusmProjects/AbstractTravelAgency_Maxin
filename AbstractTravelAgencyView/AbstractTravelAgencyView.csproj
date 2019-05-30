@@ -58,6 +58,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormCities.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCities.Designer.cs">
+      <DependentUpon>FormCities.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormCity.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCity.Designer.cs">
+      <DependentUpon>FormCity.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormCondition.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,6 +106,12 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormPutOnCity.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPutOnCity.Designer.cs">
+      <DependentUpon>FormPutOnCity.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormVoucher.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,6 +132,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormCities.resx">
+      <DependentUpon>FormCities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormCity.resx">
+      <DependentUpon>FormCity.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormCondition.resx">
       <DependentUpon>FormCondition.cs</DependentUpon>
     </EmbeddedResource>
@@ -131,6 +155,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPutOnCity.resx">
+      <DependentUpon>FormPutOnCity.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormVoucher.resx">
       <DependentUpon>FormVoucher.cs</DependentUpon>
