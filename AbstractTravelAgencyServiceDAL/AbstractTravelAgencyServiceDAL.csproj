@@ -48,6 +48,7 @@
     <Compile Include="BindingModel\ConditionBindingModel.cs" />
     <Compile Include="BindingModel\BookingBindingModel.cs" />
     <Compile Include="BindingModel\ExecutorBindingModel.cs" />
+    <Compile Include="BindingModel\InfoMessageBindingModel.cs" />
     <Compile Include="BindingModel\ReportBindingModel.cs" />
     <Compile Include="BindingModel\VoucherBindingModel.cs" />
     <Compile Include="BindingModel\VoucherConditionBindingModel.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Interfaces\IConditionService.cs" />
     <Compile Include="Interfaces\IExecutorService.cs" />
     <Compile Include="Interfaces\IMainService.cs" />
+    <Compile Include="Interfaces\IMessageInfoService.cs" />
     <Compile Include="Interfaces\IReportService.cs" />
     <Compile Include="Interfaces\IVoucherService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -67,6 +69,7 @@
     <Compile Include="ViewModel\ConditionViewModel.cs" />
     <Compile Include="ViewModel\BookingViewModel.cs" />
     <Compile Include="ViewModel\ExecutorViewModel.cs" />
+    <Compile Include="ViewModel\InfoMessageViewModel.cs" />
     <Compile Include="ViewModel\VoucherViewModel.cs" />
     <Compile Include="ViewModel\VoucherConditionViewModel.cs" />
   </ItemGroup>

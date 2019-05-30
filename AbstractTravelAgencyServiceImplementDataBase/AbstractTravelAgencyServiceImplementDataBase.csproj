@@ -50,6 +50,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -64,6 +65,7 @@
     <Compile Include="Implementations\ConditionServiceDB.cs" />
     <Compile Include="Implementations\ExecutorServiceDB.cs" />
     <Compile Include="Implementations\MainServiceDB.cs" />
+    <Compile Include="Implementations\MessageInfoServiceDB.cs" />
     <Compile Include="Implementations\ReportServiceDB.cs" />
     <Compile Include="Implementations\VoucherServiceDB.cs" />
     <Compile Include="Implementations\CustomerServiceDB.cs" />
@@ -78,6 +80,22 @@
     <Compile Include="Migrations\201904270512553_migrat.cs" />
     <Compile Include="Migrations\201904270512553_migrat.Designer.cs">
       <DependentUpon>201904270512553_migrat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905110918272_infoMesMigr.cs" />
+    <Compile Include="Migrations\201905110918272_infoMesMigr.Designer.cs">
+      <DependentUpon>201905110918272_infoMesMigr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905110922020_infoMesMigr1.cs" />
+    <Compile Include="Migrations\201905110922020_infoMesMigr1.Designer.cs">
+      <DependentUpon>201905110922020_infoMesMigr1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905111051265_infoMesMigr2.cs" />
+    <Compile Include="Migrations\201905111051265_infoMesMigr2.Designer.cs">
+      <DependentUpon>201905111051265_infoMesMigr2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905291115377_mailsMigr.cs" />
+    <Compile Include="Migrations\201905291115377_mailsMigr.Designer.cs">
+      <DependentUpon>201905291115377_mailsMigr.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -111,6 +129,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904270512553_migrat.resx">
       <DependentUpon>201904270512553_migrat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905110918272_infoMesMigr.resx">
+      <DependentUpon>201905110918272_infoMesMigr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905110922020_infoMesMigr1.resx">
+      <DependentUpon>201905110922020_infoMesMigr1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905111051265_infoMesMigr2.resx">
+      <DependentUpon>201905111051265_infoMesMigr2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905291115377_mailsMigr.resx">
+      <DependentUpon>201905291115377_mailsMigr.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
