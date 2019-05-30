@@ -4,6 +4,7 @@ using AbstractTravelAgencyServiceDAL.Interfaces;
 using AbstractTravelAgencyServiceDAL.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AbstractTravelAgencyServiceImplement.Implementations
 {
@@ -18,48 +19,38 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
 
         public List<ConditionViewModel> GetList()
         {
-            List<ConditionViewModel> result = new List<ConditionViewModel>();
-            for (int i = 0; i < source.Conditions.Count; ++i)
+            List<ConditionViewModel> result = source.Conditions.Select(rec => new ConditionViewModel
             {
-                result.Add(new ConditionViewModel
-                {
-                    ConditionId = source.Conditions[i].ConditionId,
-                    ConditionName = source.Conditions[i].ConditionName
-                });
-            }
+                ConditionId = rec.ConditionId,
+                ConditionName = rec.ConditionName
+            })
+            .ToList();
             return result;
         }
 
         public ConditionViewModel GetElement(int id)
         {
-            for (int i = 0; i < source.Conditions.Count; ++i)
+            Condition element = source.Conditions.FirstOrDefault(rec => rec.ConditionId == id);
+            if (element != null)
             {
-                if (source.Conditions[i].ConditionId == id)
+                return new ConditionViewModel
                 {
-                    return new ConditionViewModel
-                    {
-                        ConditionId = source.Conditions[i].ConditionId,
-                        ConditionName = source.Conditions[i].ConditionName
-                    };
-                }
+                    ConditionId = element.ConditionId,
+                    ConditionName = element.ConditionName
+                };
             }
             throw new Exception("Элемент не найден");
         }
 
         public void AddElement(ConditionBindingModel model)
         {
-            int maxId = 0;
-            for (int i = 0; i < source.Conditions.Count; ++i)
+            Condition element = source.Conditions.FirstOrDefault(rec => rec.ConditionName 
+            == model.ConditionName);
+            if (element != null)
             {
-                if (source.Conditions[i].ConditionId > maxId)
-                {
-                    maxId = source.Conditions[i].ConditionId;
-                }
-                if (source.Conditions[i].ConditionName == model.ConditionName)
-                {
-                    throw new Exception("Уже есть такое условие");
-                }
-            }
+            throw new Exception("Уже есть такое условие");
+        }
+            int maxId = source.Conditions.Count > 0 ? source.Conditions.Max(rec => rec.ConditionId) : 0;
             source.Conditions.Add(new Condition
             {
                 ConditionId = maxId + 1,
@@ -69,23 +60,18 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
 
         public void UpdElement(ConditionBindingModel model)
         {
-            int index = -1;
-            for (int i = 0; i < source.Conditions.Count; ++i)
+            Condition element = source.Conditions.FirstOrDefault(rec => rec.ConditionName == model.ConditionName && rec.ConditionId != model.ConditionId);
+            if (element != null)
             {
-                if (source.Conditions[i].ConditionId == model.ConditionId)
-                {
-                    index = i;
-                }
-                if (source.Conditions[i].ConditionName == model.ConditionName && source.Conditions[i].ConditionId != model.ConditionId)
-                {
-                    throw new Exception("Уже есть такое условие");
-                }
+                throw new Exception("Уже есть условие с таким названием");
             }
-            if (index == -1)
+
+            element = source.Conditions.FirstOrDefault(rec => rec.ConditionId == model.ConditionId);
+            if (element == null)
             {
                 throw new Exception("Элемент не найден");
             }
-            source.Conditions[index].ConditionName = model.ConditionName;
+            element.ConditionName = model.ConditionName;
         }
 
         public void DelElement(int id)
