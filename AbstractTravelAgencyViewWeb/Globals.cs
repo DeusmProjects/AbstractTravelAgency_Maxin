@@ -13,5 +13,6 @@ namespace AbstractTravelAgencyViewWeb
         public static IConditionService ConditionService { get; } = new ConditionServiceList();
         public static IVoucherService VoucherService { get; } = new VoucherServiceList();
         public static IMainService MainService { get; } = new MainServiceList();
+        public static ICityService CityService { get; } = new CityServiceList();
     }
 }

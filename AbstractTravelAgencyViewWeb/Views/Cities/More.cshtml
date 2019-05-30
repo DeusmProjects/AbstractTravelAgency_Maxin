@@ -1,0 +1,38 @@
+﻿@model AbstractTravelAgencyServiceDAL.ViewModel.CityViewModel
+
+@{
+    ViewBag.Title = "More";
+}
+
+<h2>More</h2>
+
+<div>
+    <table class="table">
+        <tr>
+            <th>
+                <label>Условие</label>
+            </th>
+            <th>
+                <label>Количество</label>
+            </th>
+        </tr>
+
+        @*@foreach (var item in Model.CityConditions)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ConditionName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td></td>
+            </tr>
+        }*@
+
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,56 @@
+﻿@model AbstractTravelAgencyServiceDAL.ViewModel.CityConditionViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CityConditionId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CityConditionId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CityId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CityId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ConditionId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ConditionId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ConditionName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ConditionName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
