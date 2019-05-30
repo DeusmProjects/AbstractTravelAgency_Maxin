@@ -7,48 +7,30 @@
 <h2>Details</h2>
 
 <div>
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CityConditionId)
-        </dt>
+    <table class="table">
+        <tr>
+            <th>
+                <label>Условие</label>
+            </th>
+            <th>
+                <label>Количество</label>
+            </th>
+        </tr>
 
-        <dd>
-            @Html.DisplayFor(model => model.CityConditionId)
-        </dd>
+        @*@foreach (var item in Model.CityConditions)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ConditionName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td></td>
+            </tr>
+        }*@
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CityId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CityId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ConditionId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ConditionId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ConditionName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ConditionName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Amount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Amount)
-        </dd>
-
-    </dl>
+    </table>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
