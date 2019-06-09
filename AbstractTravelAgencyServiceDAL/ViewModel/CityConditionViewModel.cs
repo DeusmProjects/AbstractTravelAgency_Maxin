@@ -9,7 +9,7 @@ namespace AbstractTravelAgencyServiceDAL.ViewModel
 {
     public class CityConditionViewModel
     {
-        public int CityConditionId { get; set; }
+        public int Id { get; set; }
 
         public int CityId { get; set; }
 

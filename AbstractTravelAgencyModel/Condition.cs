@@ -8,7 +8,7 @@ namespace AbstractTravelAgencyModel
 {
     public class Condition
     {
-        public int ConditionId { get; set; }
+        public int Id { get; set; }
 
         public string ConditionName { get; set; }
     }

@@ -21,7 +21,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
         {
             List<ConditionViewModel> result = source.Conditions.Select(rec => new ConditionViewModel
             {
-                ConditionId = rec.ConditionId,
+                Id = rec.Id,
                 ConditionName = rec.ConditionName
             })
             .ToList();
@@ -30,12 +30,12 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
 
         public ConditionViewModel GetElement(int id)
         {
-            Condition element = source.Conditions.FirstOrDefault(rec => rec.ConditionId == id);
+            Condition element = source.Conditions.FirstOrDefault(rec => rec.Id == id);
             if (element != null)
             {
                 return new ConditionViewModel
                 {
-                    ConditionId = element.ConditionId,
+                    Id = element.Id,
                     ConditionName = element.ConditionName
                 };
             }
@@ -50,23 +50,23 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
             {
             throw new Exception("Уже есть такое условие");
         }
-            int maxId = source.Conditions.Count > 0 ? source.Conditions.Max(rec => rec.ConditionId) : 0;
+            int maxId = source.Conditions.Count > 0 ? source.Conditions.Max(rec => rec.Id) : 0;
             source.Conditions.Add(new Condition
             {
-                ConditionId = maxId + 1,
+                Id = maxId + 1,
                 ConditionName = model.ConditionName
             });
         }
 
         public void UpdElement(ConditionBindingModel model)
         {
-            Condition element = source.Conditions.FirstOrDefault(rec => rec.ConditionName == model.ConditionName && rec.ConditionId != model.ConditionId);
+            Condition element = source.Conditions.FirstOrDefault(rec => rec.ConditionName == model.ConditionName && rec.Id != model.Id);
             if (element != null)
             {
                 throw new Exception("Уже есть условие с таким названием");
             }
 
-            element = source.Conditions.FirstOrDefault(rec => rec.ConditionId == model.ConditionId);
+            element = source.Conditions.FirstOrDefault(rec => rec.Id == model.Id);
             if (element == null)
             {
                 throw new Exception("Элемент не найден");
@@ -78,7 +78,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
         {
             for (int i = 0; i < source.Conditions.Count; ++i)
             {
-                if (source.Conditions[i].ConditionId == id)
+                if (source.Conditions[i].Id == id)
                 {
                     source.Conditions.RemoveAt(i);
                     return;

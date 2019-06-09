@@ -15,7 +15,6 @@ namespace AbstractTravelAgencyViewWeb.Controllers
 
         public ActionResult Create()
         {
-
             return View();
         }
 
@@ -34,7 +33,7 @@ namespace AbstractTravelAgencyViewWeb.Controllers
             var viewModel = service.GetElement(id);
             var bindingModel = new CustomerBindingModel
             {
-                CustomerId = id,
+                Id = id,
                 CustomerFIO = viewModel.CustomerFIO
             };
             return View(bindingModel);
@@ -45,7 +44,7 @@ namespace AbstractTravelAgencyViewWeb.Controllers
         {
             service.UpdElement(new CustomerBindingModel
             {
-                CustomerId = int.Parse(Request["CustomerId"]),
+                Id = int.Parse(Request["Id"]),
                 CustomerFIO = Request["CustomerFIO"]
             });
             return RedirectToAction("Index");

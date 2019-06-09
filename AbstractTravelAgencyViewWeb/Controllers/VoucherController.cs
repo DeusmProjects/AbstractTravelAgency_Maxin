@@ -27,7 +27,7 @@ namespace AbstractTravelAgencyViewWeb.Controllers
 
         public ActionResult AddCondition()
         {
-            var conditions = new SelectList(conditionService.GetList(), "ConditionId", "ConditionName");
+            var conditions = new SelectList(conditionService.GetList(), "Id", "ConditionName");
             ViewBag.Conditions = conditions;
             return View();
         }
@@ -56,7 +56,7 @@ namespace AbstractTravelAgencyViewWeb.Controllers
             {
                 voucherConditions.Add(new VoucherConditionBindingModel
                 {
-                    VoucherConditionId = voucher.VoucherConditions[i].VoucherConditionId,
+                    Id = voucher.VoucherConditions[i].Id,
                     VoucherId = voucher.VoucherConditions[i].VoucherId,
                     ConditionId = voucher.VoucherConditions[i].ConditionId,
                     Amount = voucher.VoucherConditions[i].Amount

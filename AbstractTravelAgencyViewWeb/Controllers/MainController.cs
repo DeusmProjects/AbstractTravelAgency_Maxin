@@ -21,8 +21,8 @@ namespace AbstractTravelAgencyViewWeb.Controllers
 
         public ActionResult Create()
         {
-            var vouchers = new SelectList(voucherService.GetList(), "VoucherId", "VoucherName");
-            var customers = new SelectList(customerService.GetList(), "CustomerId", "CustomerFIO");
+            var vouchers = new SelectList(voucherService.GetList(), "Id", "VoucherName");
+            var customers = new SelectList(customerService.GetList(), "Id", "CustomerFIO");
             ViewBag.Vouchers = vouchers;
             ViewBag.Customers = customers;
             return View();
@@ -60,13 +60,13 @@ namespace AbstractTravelAgencyViewWeb.Controllers
                 switch (status)
                 {
                     case "Processing":
-                        mainService.TakeBookingInWork(new BookingBindingModel { BookingId = id });
+                        mainService.TakeBookingInWork(new BookingBindingModel { Id = id });
                         break;
                     case "Ready":
-                        mainService.FinishBooking(new BookingBindingModel { BookingId = id });
+                        mainService.FinishBooking(new BookingBindingModel { Id = id });
                         break;
                     case "Paid":
-                        mainService.PayBooking(new BookingBindingModel { BookingId = id });
+                        mainService.PayBooking(new BookingBindingModel { Id = id });
                         break;
                 }
             }

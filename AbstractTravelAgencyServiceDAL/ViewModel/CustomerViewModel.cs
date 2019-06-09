@@ -9,7 +9,7 @@ namespace AbstractTravelAgencyServiceDAL.ViewModel
 {
     public class CustomerViewModel
     {
-        public int CustomerId { get; set; }
+        public int Id { get; set; }
 
         [DisplayName("ФИО Клиента")]
         public string CustomerFIO { get; set; }

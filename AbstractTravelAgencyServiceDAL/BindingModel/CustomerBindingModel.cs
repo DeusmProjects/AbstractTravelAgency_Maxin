@@ -8,7 +8,7 @@ namespace AbstractTravelAgencyServiceDAL.BindingModel
 {
     public class CustomerBindingModel
     {
-        public int CustomerId { get; set; }
+        public int Id { get; set; }
 
         public string CustomerFIO { get; set; }
     }

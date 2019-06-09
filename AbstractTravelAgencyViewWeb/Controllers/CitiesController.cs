@@ -34,7 +34,7 @@ namespace AbstractTravelAgencyViewWeb.Controllers
             var viewModel = service.GetElement(id);
             var bindingModel = new CityBindingModel
             {
-                CityId = id,
+                Id = id,
                 CityName = viewModel.CityName
             };
             return View(bindingModel);
@@ -45,7 +45,7 @@ namespace AbstractTravelAgencyViewWeb.Controllers
         {
             service.UpdElement(new CityBindingModel
             {
-                CityId = int.Parse(Request["CityId"]),
+                Id = int.Parse(Request["Id"]),
                 CityName = Request["CityName"]
             });
             return RedirectToAction("List");
