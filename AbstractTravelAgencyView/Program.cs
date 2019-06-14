@@ -37,6 +37,7 @@ namespace AbstractTravelAgencyView
             currentContainer.RegisterType<IVoucherService, VoucherServiceDB>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IMainService, MainServiceDB>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<ICityService, CityServiceDB>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IReportService, ReportServiceDB>(new HierarchicalLifetimeManager());
             return currentContainer;
         }
     }

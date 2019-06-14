@@ -78,6 +78,7 @@
             // 
             // comboBoxCustomer
             // 
+            this.comboBoxCustomer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCustomer.FormattingEnabled = true;
             this.comboBoxCustomer.Location = new System.Drawing.Point(129, 31);
             this.comboBoxCustomer.Name = "comboBoxCustomer";
@@ -86,6 +87,7 @@
             // 
             // comboBoxVoucher
             // 
+            this.comboBoxVoucher.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxVoucher.FormattingEnabled = true;
             this.comboBoxVoucher.Location = new System.Drawing.Point(129, 77);
             this.comboBoxVoucher.Name = "comboBoxVoucher";
