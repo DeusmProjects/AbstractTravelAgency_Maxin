@@ -10,7 +10,7 @@ namespace AbstractTravelAgencyServiceImplementDataBase
 {
     public class AbstractDbScope : DbContext
     {
-        public AbstractDbScope() : base("AbstractDatabase")
+        public AbstractDbScope() : base("AbstractDatabaseWeb")
         {
             Configuration.ProxyCreationEnabled = false;
             Configuration.LazyLoadingEnabled = false;

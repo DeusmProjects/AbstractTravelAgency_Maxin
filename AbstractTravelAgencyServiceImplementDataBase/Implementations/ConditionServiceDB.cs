@@ -1,6 +1,7 @@
 ﻿using AbstractTravelAgencyModel;
 using AbstractTravelAgencyServiceDAL.BindingModel;
 using AbstractTravelAgencyServiceDAL.Interfaces;
+using AbstractTravelAgencyServiceDAL.ViewModel;
 using AbstractTravelAgencyServiceImplementDataBase;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AbstractGarmentFactoryServiceImplementDataBase.Implementations
+namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
 {
     public class ConditionServiceDB : IConditionService
     {

@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AbstractGarmentFactoryServiceImplementDataBase.Implementations
+namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
 {
     public class CityServiceDB : ICityService
     {

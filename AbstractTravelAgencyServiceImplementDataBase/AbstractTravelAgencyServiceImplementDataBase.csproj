@@ -54,13 +54,9 @@
     <Compile Include="Implementations\MainServiceDB.cs" />
     <Compile Include="Implementations\VoucherServiceDB.cs" />
     <Compile Include="Implementations\CustomerServiceDB.cs" />
-    <Compile Include="Migrations\201903160933100_FirstMigration.cs" />
-    <Compile Include="Migrations\201903160933100_FirstMigration.Designer.cs">
-      <DependentUpon>201903160933100_FirstMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201903300818217_SecondMigration.cs" />
-    <Compile Include="Migrations\201903300818217_SecondMigration.Designer.cs">
-      <DependentUpon>201903300818217_SecondMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201906092025184_init.cs" />
+    <Compile Include="Migrations\201906092025184_init.Designer.cs">
+      <DependentUpon>201906092025184_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -80,11 +76,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201903160933100_FirstMigration.resx">
-      <DependentUpon>201903160933100_FirstMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903300818217_SecondMigration.resx">
-      <DependentUpon>201903300818217_SecondMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201906092025184_init.resx">
+      <DependentUpon>201906092025184_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

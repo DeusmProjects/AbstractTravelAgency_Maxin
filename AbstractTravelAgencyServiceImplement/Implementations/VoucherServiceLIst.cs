@@ -25,7 +25,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
                     Id = rec.Id,
                     VoucherName = rec.VoucherName,
                     Cost = rec.Cost,
-                    VoucherCondition = source.VoucherConditions
+                    VoucherConditions = source.VoucherConditions
                         .Where(recPC => recPC.VoucherId == rec.Id)
                         .Select(recPC => new VoucherConditionViewModel
                         {

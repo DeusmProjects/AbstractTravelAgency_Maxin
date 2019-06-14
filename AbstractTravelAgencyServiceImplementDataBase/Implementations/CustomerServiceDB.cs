@@ -1,6 +1,7 @@
 ﻿using AbstractTravelAgencyModel;
 using AbstractTravelAgencyServiceDAL.BindingModel;
 using AbstractTravelAgencyServiceDAL.Interfaces;
+using AbstractTravelAgencyServiceDAL.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;

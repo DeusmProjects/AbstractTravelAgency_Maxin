@@ -1,5 +1,7 @@
 ﻿using AbstractTravelAgencyServiceDAL.Interfaces;
 using AbstractTravelAgencyServiceImplement.Implementations;
+using AbstractTravelAgencyServiceImplementDataBase;
+using AbstractTravelAgencyServiceImplementDataBase.Implementations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +11,11 @@ namespace AbstractTravelAgencyViewWeb
 {
     public static class Globals
     {
-        public static ICustomerService CustomerService { get; } = new CustomerServiceList();
-        public static IConditionService ConditionService { get; } = new ConditionServiceList();
-        public static IVoucherService VoucherService { get; } = new VoucherServiceList();
-        public static IMainService MainService { get; } = new MainServiceList();
-        public static ICityService CityService { get; } = new CityServiceList();
+        public static AbstractDbScope DbScope { get; } = new AbstractDbScope();
+        public static ICustomerService CustomerService { get; } = new CustomerServiceDB(DbScope);
+        public static IConditionService ConditionService { get; } = new ConditionServiceDB(DbScope);
+        public static IVoucherService VoucherService { get; } = new VoucherServiceDB(DbScope);
+        public static IMainService MainService { get; } = new MainServiceDB(DbScope);
+        public static ICityService CityService { get; } = new CityServiceDB(DbScope);
     }
 }

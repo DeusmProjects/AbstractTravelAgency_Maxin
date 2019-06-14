@@ -1,6 +1,7 @@
 ﻿using AbstractTravelAgencyModel;
 using AbstractTravelAgencyServiceDAL.BindingModel;
 using AbstractTravelAgencyServiceDAL.Interfaces;
+using AbstractTravelAgencyServiceDAL.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
                 Id = rec.Id,
                 VoucherName = rec.VoucherName,
                 Cost = rec.Cost,
-                VoucherCondition = context.VoucherConditions
+                VoucherConditions = context.VoucherConditions
             .Where(recPC => recPC.VoucherId == rec.Id)
            .Select(recPC => new VoucherConditionViewModel
                {
@@ -48,7 +49,7 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
                     Id = element.Id,
                     VoucherName = element.VoucherName,
                     Cost = element.Cost,
-                    VoucherCondition = context.VoucherConditions
+                    VoucherConditions = context.VoucherConditions
                      .Where(recPC => recPC.VoucherId == element.Id)
                      .Select(recPC => new VoucherConditionViewModel
                      {
