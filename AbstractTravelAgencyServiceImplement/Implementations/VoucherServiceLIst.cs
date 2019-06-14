@@ -25,7 +25,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
                     Id = rec.Id,
                     VoucherName = rec.VoucherName,
                     Cost = rec.Cost,
-                    VoucherConditions = source.VoucherConditions
+                    VoucherCondition = source.VoucherConditions
                         .Where(recPC => recPC.VoucherId == rec.Id)
                         .Select(recPC => new VoucherConditionViewModel
                         {
@@ -66,6 +66,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
                 };
             }
             throw new Exception("Элемент не найден");
+
         }
 
         public void AddElement(VoucherBindingModel model)
