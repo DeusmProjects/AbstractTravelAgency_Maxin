@@ -271,7 +271,7 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
             //из ресрусов получаем шрифт для кирилицы
             if (!File.Exists("TIMCYR.TTF"))
             {
-                File.WriteAllBytes("TIMCYR.TTF", Properties.Resources.TIMCYR);
+                File.WriteAllBytes("D:\\TIMCYR.TTF", Properties.Resources.TIMCYR);
             }
             //открываем файл для работы
             FileStream fs = new FileStream(model.FileName, FileMode.OpenOrCreate,
@@ -281,7 +281,7 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
             doc.SetMargins(0.5f, 0.5f, 0.5f, 0.5f);
             PdfWriter writer = PdfWriter.GetInstance(doc, fs);
             doc.Open();
-            BaseFont baseFont = BaseFont.CreateFont("TIMCYR.TTF", BaseFont.IDENTITY_H,
+            BaseFont baseFont = BaseFont.CreateFont("D:\\TIMCYR.TTF", BaseFont.IDENTITY_H,
            BaseFont.NOT_EMBEDDED);
             //вставляем заголовок
             var phraseTitle = new Phrase("Заказы клиентов",

@@ -1,41 +1,11 @@
-﻿@using AbstractTravelAgencyModel
-
-@{
-    Layout = null;
+﻿@{
+    ViewBag.Title = "Отчеты";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
- 
-<!DOCTYPE html>
- 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width"/>
-    <title>Index</title>
-</head>
-<body>
-<h4>Bookings</h4>
-<hr/>
-<table cellpadding="0" cellspacing="0">
-    <tr>
-        <th>Id</th>
-        <th>CustomerName</th>
-        <th>TotalSum</th>
-        <th>OrderStatus</th>
-        <th>VoucherName</th>
-        <th>Amount</th>
-    </tr>
-    @foreach (Booking booking in Model)
-    {
-        <tr>
-            <td>@booking.Id</td>
-            <td>@booking.Customer.CustomerFIO</td>
-            <td>@booking.TotalSum</td>
-            <td>@booking.StatusBooking</td>
-            <td>@booking.Voucher.VoucherName</td>
-            <td>@booking.Amount</td>
-        </tr>
-    }
-</table>
-<br/>
-<a href="./CustomerReport.aspx">View Report</a>
-</body>
-</html>
+
+<h2>Отчеты</h2>
+@Html.ValidationSummary(true)
+
+@Html.ActionLink("Отчеты клиентов", "CustomerBookings")
+@Html.ActionLink("Загруженность городов", "CitiesLoad")
+@Html.ActionLink("Прайс путевок", "VoucherPrice")

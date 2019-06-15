@@ -17,5 +17,6 @@ namespace AbstractTravelAgencyViewWeb
         public static IVoucherService VoucherService { get; } = new VoucherServiceDB(DbScope);
         public static IMainService MainService { get; } = new MainServiceDB(DbScope);
         public static ICityService CityService { get; } = new CityServiceDB(DbScope);
+        public static IReportService ReportService { get; } = new ReportServiceDB(DbScope);
     }
 }
