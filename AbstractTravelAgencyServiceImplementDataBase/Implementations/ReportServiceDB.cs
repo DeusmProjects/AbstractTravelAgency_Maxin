@@ -11,9 +11,6 @@ using System.Data.Entity;
 using System.Data.Entity.SqlServer;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.util;
 
 namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
 {
@@ -122,8 +119,7 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
             {
                 CityName = stock.CityName,
                 TotalAmount = stockCompList.Sum(r => r.Amount),
-                Conditions = stockCompList.Select(r => new Tuple<string,
-    int>(r.Condition.ConditionName, r.Amount))
+                Conditions = stockCompList.Select(r => new Tuple<string, int>(r.Condition.ConditionName, r.Amount))
             })
             .ToList();
         }
@@ -235,7 +231,7 @@ namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
                     }
                 }
             //сохраняем
- excel.Workbooks[1].Save();
+                excel.Workbooks[1].Save();
             }
             catch (Exception)
             {

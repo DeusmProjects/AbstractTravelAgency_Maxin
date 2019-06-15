@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="BookingsDataSet" targetNamespace="http://tempuri.org/BookingsDataSet.xsd" xmlns:mstns="http://tempuri.org/BookingsDataSet.xsd" xmlns="http://tempuri.org/BookingsDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="AbstractDatabaseWebConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="AbstractDatabaseWebConnectionString (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.AbstractDatabaseWebConnectionString.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="BookingsDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="BookingsDataSet" msprop:Generator_UserDSName="BookingsDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Bookings" msprop:Generator_TableClassName="BookingsDataTable" msprop:Generator_TableVarName="tableBookings" msprop:Generator_TablePropName="Bookings" msprop:Generator_RowDeletingName="BookingsRowDeleting" msprop:Generator_RowChangingName="BookingsRowChanging" msprop:Generator_RowEvHandlerName="BookingsRowChangeEventHandler" msprop:Generator_RowDeletedName="BookingsRowDeleted" msprop:Generator_UserTableName="Bookings" msprop:Generator_RowChangedName="BookingsRowChanged" msprop:Generator_RowEvArgName="BookingsRowChangeEvent" msprop:Generator_RowClassName="BookingsRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnId" msprop:Generator_ColumnPropNameInRow="Id" msprop:Generator_ColumnPropNameInTable="IdColumn" msprop:Generator_UserColumnName="Id" type="xs:int" />
+              <xs:element name="CustomerId" msprop:Generator_ColumnVarNameInTable="columnCustomerId" msprop:Generator_ColumnPropNameInRow="CustomerId" msprop:Generator_ColumnPropNameInTable="CustomerIdColumn" msprop:Generator_UserColumnName="CustomerId" type="xs:int" />
+              <xs:element name="VoucherId" msprop:Generator_ColumnVarNameInTable="columnVoucherId" msprop:Generator_ColumnPropNameInRow="VoucherId" msprop:Generator_ColumnPropNameInTable="VoucherIdColumn" msprop:Generator_UserColumnName="VoucherId" type="xs:int" />
+              <xs:element name="Amount" msprop:Generator_ColumnVarNameInTable="columnAmount" msprop:Generator_ColumnPropNameInRow="Amount" msprop:Generator_ColumnPropNameInTable="AmountColumn" msprop:Generator_UserColumnName="Amount" type="xs:int" />
+              <xs:element name="TotalSum" msprop:Generator_ColumnVarNameInTable="columnTotalSum" msprop:Generator_ColumnPropNameInRow="TotalSum" msprop:Generator_ColumnPropNameInTable="TotalSumColumn" msprop:Generator_UserColumnName="TotalSum" type="xs:decimal" />
+              <xs:element name="StatusBooking" msprop:Generator_ColumnVarNameInTable="columnStatusBooking" msprop:Generator_ColumnPropNameInRow="StatusBooking" msprop:Generator_ColumnPropNameInTable="StatusBookingColumn" msprop:Generator_UserColumnName="StatusBooking" type="xs:int" />
+              <xs:element name="DateCreateBooking" msprop:Generator_ColumnVarNameInTable="columnDateCreateBooking" msprop:Generator_ColumnPropNameInRow="DateCreateBooking" msprop:Generator_ColumnPropNameInTable="DateCreateBookingColumn" msprop:Generator_UserColumnName="DateCreateBooking" type="xs:dateTime" />
+              <xs:element name="DateImplementBooking" msprop:Generator_ColumnVarNameInTable="columnDateImplementBooking" msprop:Generator_ColumnPropNameInRow="DateImplementBooking" msprop:Generator_ColumnPropNameInTable="DateImplementBookingColumn" msprop:Generator_UserColumnName="DateImplementBooking" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Bookings" />
+      <xs:field xpath="mstns:Id" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

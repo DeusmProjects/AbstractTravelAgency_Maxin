@@ -1,6 +1,7 @@
 ﻿using AbstractTravelAgencyModel;
 using AbstractTravelAgencyServiceDAL.BindingModel;
 using AbstractTravelAgencyServiceDAL.Interfaces;
+using AbstractTravelAgencyServiceDAL.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -38,7 +39,7 @@ namespace AbstractTravelAgencyView
                     {
                         textBoxName.Text = view.VoucherName;
                         textBoxPrice.Text = view.Cost.ToString();
-                        voucherConditions = view.VoucherCondition;
+                        voucherConditions = view.VoucherConditions;
                         LoadData();
                     }
                 }
