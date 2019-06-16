@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Unity;
 using Unity.Lifetime;
-using AbstractGarmentFactoryServiceImplementDataBase.Implementations;
 
 namespace AbstractTravelAgencyView
 {
@@ -37,6 +36,7 @@ namespace AbstractTravelAgencyView
             currentContainer.RegisterType<IVoucherService, VoucherServiceDB>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IMainService, MainServiceDB>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<ICityService, CityServiceDB>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IReportService, ReportServiceDB>(new HierarchicalLifetimeManager());
             return currentContainer;
         }
     }

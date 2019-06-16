@@ -1,0 +1,18 @@
+﻿@model IEnumerable<AbstractTravelAgencyServiceDAL.ViewModel.BookingViewModel>
+
+@{
+    ViewBag.Title = "Заказы клиентов. Отчет";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Список броней</h2>
+@Html.ValidationSummary(true)
+
+@using (Html.BeginForm("SaveCustomerBookings", "Report", FormMethod.Post))
+{
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Создать" class="btn btn-primary" />
+        </div>
+    </div>
+}
