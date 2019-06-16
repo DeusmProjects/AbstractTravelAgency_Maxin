@@ -66,7 +66,6 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
                 };
             }
             throw new Exception("Элемент не найден");
-
         }
 
         public void AddElement(VoucherBindingModel model)
