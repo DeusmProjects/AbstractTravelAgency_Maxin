@@ -35,7 +35,7 @@ namespace AbstractTravelAgencyViewWeb.Controllers
             var viewModel = service.GetElement(id);
             var bindingModel = new ConditionBindingModel
             {
-                ConditionId = id,
+                Id = id,
                 ConditionName = viewModel.ConditionName
             };
             return View(bindingModel);
@@ -46,7 +46,7 @@ namespace AbstractTravelAgencyViewWeb.Controllers
         {
             service.UpdElement(new ConditionBindingModel
             {
-                ConditionId = int.Parse(Request["ConditionId"]),
+                Id = int.Parse(Request["Id"]),
                 ConditionName = Request["ConditionName"]
             });
             return RedirectToAction("Index");

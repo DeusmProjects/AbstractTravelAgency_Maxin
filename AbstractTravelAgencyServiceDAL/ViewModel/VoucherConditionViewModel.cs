@@ -9,7 +9,7 @@ namespace AbstractTravelAgencyServiceDAL.ViewModel
 {
     public class VoucherConditionViewModel
     {
-        public int VoucherConditionId { get; set; }
+        public int Id { get; set; }
 
         public int VoucherId { get; set; }
 

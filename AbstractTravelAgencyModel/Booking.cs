@@ -8,7 +8,7 @@ namespace AbstractTravelAgencyModel
 {
     public class Booking
     {
-        public int BookingId { get; set; }
+        public int Id { get; set; }
 
         public int CustomerId { get; set; }
 
@@ -23,5 +23,7 @@ namespace AbstractTravelAgencyModel
         public DateTime DateCreateBooking { get; set; }
 
         public DateTime? DateImplementBooking { get; set; }
+        public virtual Customer Customer { get; set; }
+        public virtual Voucher Voucher { get; set; }
     }
 }

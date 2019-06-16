@@ -9,7 +9,7 @@ namespace AbstractTravelAgencyServiceDAL.ViewModel
 {
     public class ConditionViewModel
     {
-        public int ConditionId { get; set; }
+        public int Id { get; set; }
 
         [DisplayName("Название условия")]
         public string ConditionName { get; set; }

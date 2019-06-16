@@ -25,9 +25,9 @@
                 @Html.DisplayFor(modelItem => item.CityName)
             </td>
             <td>
-                @Html.ActionLink("Изменить", "Edit", new { id = item.CityId }) |
-                @Html.ActionLink("Удалить", "Delete", new { id = item.CityId }) |
-                @Html.ActionLink("Подробнее", "More", new { id = item.CityId })
+                @Html.ActionLink("Изменить", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Удалить", "Delete", new { id = item.Id }) |
+                @Html.ActionLink("Подробнее", "More", new { id = item.Id })
             </td>
         </tr>
     }

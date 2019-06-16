@@ -5,7 +5,7 @@ namespace AbstractTravelAgencyServiceDAL.ViewModel
 {
     public class VoucherViewModel
     {
-        public int VoucherId { get; set; }
+        public int Id { get; set; }
 
         [DisplayName("Название путевки")]
         public string VoucherName { get; set; }

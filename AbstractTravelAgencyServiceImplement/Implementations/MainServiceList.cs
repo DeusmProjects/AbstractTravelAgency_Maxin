@@ -22,7 +22,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
             List<BookingViewModel> result = source.Bookings
              .Select(rec => new BookingViewModel
              {
-                 BookingId = rec.BookingId,
+                 Id = rec.Id,
                  CustomerId = rec.CustomerId,
                  VoucherId = rec.VoucherId,
                  DateCreateBooking = rec.DateCreateBooking.ToLongDateString(),
@@ -30,8 +30,8 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
                  StatusBooking = rec.StatusBooking.ToString(),
                  Amount = rec.Amount,
                  TotalSum = rec.TotalSum,
-                 CustomerFIO = source.Customers.FirstOrDefault(recC => recC.CustomerId == rec.CustomerId)?.CustomerFIO,
-                 VoucherName = source.Vouchers.FirstOrDefault(recP => recP.VoucherId == rec.VoucherId)?.VoucherName,
+                 CustomerFIO = source.Customers.FirstOrDefault(recC => recC.Id == rec.CustomerId)?.CustomerFIO,
+                 VoucherName = source.Vouchers.FirstOrDefault(recP => recP.Id == rec.VoucherId)?.VoucherName,
              })
              .ToList();
             return result;
@@ -39,10 +39,10 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
 
         public void CreateBooking(BookingBindingModel model)
         {
-            int maxId = source.Bookings.Count > 0 ? source.Bookings.Max(rec => rec.BookingId) : 0;
+            int maxId = source.Bookings.Count > 0 ? source.Bookings.Max(rec => rec.Id) : 0;
             source.Bookings.Add(new Booking
             {
-                BookingId = maxId + 1,
+                Id = maxId + 1,
                 CustomerId = model.CustomerId,
                 VoucherId = model.VoucherId,
                 DateCreateBooking = DateTime.Now,
@@ -54,7 +54,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
 
         public void TakeBookingInWork(BookingBindingModel model)
         {
-            Booking element = source.Bookings.FirstOrDefault(rec => rec.BookingId == model.BookingId);
+            Booking element = source.Bookings.FirstOrDefault(rec => rec.Id == model.Id);
             if (element == null)
             {
                 throw new Exception("Элемент не найден");
@@ -71,7 +71,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
                .Sum(rec => rec.Amount);
                 if (countOnCities < voucherCondition.Amount * element.Amount)
                 {
-                    var conditionName = source.Conditions.FirstOrDefault(rec => rec.ConditionId == voucherCondition.ConditionId);
+                    var conditionName = source.Conditions.FirstOrDefault(rec => rec.Id == voucherCondition.ConditionId);
                     throw new Exception("Не достаточно условий " +
                    conditionName?.ConditionName + " требуется " + (voucherCondition.Amount * element.Amount) +
                    ", в наличии " + countOnCities);
@@ -103,7 +103,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
 
         public void PayBooking(BookingBindingModel model)
         {
-            Booking element = source.Bookings.FirstOrDefault(rec => rec.BookingId == model.BookingId);
+            Booking element = source.Bookings.FirstOrDefault(rec => rec.Id == model.Id);
             if (element == null)
             {
                 throw new Exception("Элемент не найден");
@@ -117,7 +117,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
 
         public void FinishBooking(BookingBindingModel model)
         {
-            Booking element = source.Bookings.FirstOrDefault(rec => rec.BookingId == model.BookingId);
+            Booking element = source.Bookings.FirstOrDefault(rec => rec.Id == model.Id);
             if (element == null)
             {
                 throw new Exception("Элемент не найден");
@@ -139,10 +139,10 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
             }
             else
             {
-                int maxId = source.CityConditions.Count > 0 ? source.CityConditions.Max(rec => rec.CityConditionId) : 0;
+                int maxId = source.CityConditions.Count > 0 ? source.CityConditions.Max(rec => rec.Id) : 0;
                 source.CityConditions.Add(new CityCondition
                 {
-                    CityConditionId = ++maxId,
+                    Id = ++maxId,
                     CityId = model.CityId,
                     ConditionId = model.ConditionId,
                     Amount = model.Amount

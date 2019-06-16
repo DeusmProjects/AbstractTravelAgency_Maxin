@@ -15,10 +15,10 @@ namespace AbstractTravelAgencyViewWeb.Controllers
         public ActionResult Index()
         {
 
-            var conditions = new SelectList(conditionService.GetList(), "ConditionId", "ConditionName");
+            var conditions = new SelectList(conditionService.GetList(), "Id", "ConditionName");
             ViewBag.Conditions = conditions;
 
-            var cities = new SelectList(cityService.GetList(), "CityId", "CityName");
+            var cities = new SelectList(cityService.GetList(), "Id", "CityName");
             ViewBag.Cities = cities;
             return View((CityViewModel)Session["Cities"]);
         }

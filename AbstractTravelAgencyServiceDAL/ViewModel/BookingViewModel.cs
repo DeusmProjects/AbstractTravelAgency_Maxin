@@ -9,7 +9,7 @@ namespace AbstractTravelAgencyServiceDAL.ViewModel
 {
     public class BookingViewModel
     {
-        public int BookingId { get; set; }
+        public int Id { get; set; }
 
         public int CustomerId { get; set; }
 

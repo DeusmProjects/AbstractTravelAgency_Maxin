@@ -2,24 +2,27 @@
 using AbstractTravelAgencyServiceDAL.BindingModel;
 using AbstractTravelAgencyServiceDAL.Interfaces;
 using AbstractTravelAgencyServiceDAL.ViewModel;
+using AbstractTravelAgencyServiceImplementDataBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace AbstractTravelAgencyServiceImplement.Implementations
+namespace AbstractTravelAgencyServiceImplementDataBase.Implementations
 {
-    public class ConditionServiceList : IConditionService
+    public class ConditionServiceDB : IConditionService
     {
-        private DataListSingleton source;
+        private AbstractDbScope context;
 
-        public ConditionServiceList()
+        public ConditionServiceDB(AbstractDbScope context)
         {
-            source = DataListSingleton.GetInstance();
+            this.context = context;
         }
 
         public List<ConditionViewModel> GetList()
         {
-            List<ConditionViewModel> result = source.Conditions.Select(rec => new ConditionViewModel
+            List<ConditionViewModel> result = context.Conditions.Select(rec => new ConditionViewModel
             {
                 Id = rec.Id,
                 ConditionName = rec.ConditionName
@@ -30,7 +33,7 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
 
         public ConditionViewModel GetElement(int id)
         {
-            Condition element = source.Conditions.FirstOrDefault(rec => rec.Id == id);
+            Condition element = context.Conditions.FirstOrDefault(rec => rec.Id == id);
             if (element != null)
             {
                 return new ConditionViewModel
@@ -44,47 +47,46 @@ namespace AbstractTravelAgencyServiceImplement.Implementations
 
         public void AddElement(ConditionBindingModel model)
         {
-            Condition element = source.Conditions.FirstOrDefault(rec => rec.ConditionName 
-            == model.ConditionName);
+            Condition element = context.Conditions.FirstOrDefault(rec => rec.ConditionName == model.ConditionName);
             if (element != null)
             {
-            throw new Exception("Уже есть такое условие");
-        }
-            int maxId = source.Conditions.Count > 0 ? source.Conditions.Max(rec => rec.Id) : 0;
-            source.Conditions.Add(new Condition
+                throw new Exception("Уже есть такое изделие");
+            }
+            context.Conditions.Add(new Condition
             {
-                Id = maxId + 1,
                 ConditionName = model.ConditionName
             });
+            context.SaveChanges();
         }
 
         public void UpdElement(ConditionBindingModel model)
         {
-            Condition element = source.Conditions.FirstOrDefault(rec => rec.ConditionName == model.ConditionName && rec.Id != model.Id);
+            Condition element = context.Conditions.FirstOrDefault(rec => rec.ConditionName == model.ConditionName && rec.Id != model.Id);
             if (element != null)
             {
-                throw new Exception("Уже есть условие с таким названием");
+                throw new Exception("Уже есть такое условие");
             }
-
-            element = source.Conditions.FirstOrDefault(rec => rec.Id == model.Id);
+            element = context.Conditions.FirstOrDefault(rec => rec.Id == model.Id);
             if (element == null)
             {
                 throw new Exception("Элемент не найден");
             }
             element.ConditionName = model.ConditionName;
+            context.SaveChanges();
         }
 
         public void DelElement(int id)
         {
-            for (int i = 0; i < source.Conditions.Count; ++i)
+            Condition element = context.Conditions.FirstOrDefault(rec => rec.Id == id);
+            if (element != null)
             {
-                if (source.Conditions[i].Id == id)
-                {
-                    source.Conditions.RemoveAt(i);
-                    return;
-                }
+                context.Conditions.Remove(element);
+                context.SaveChanges();
             }
-            throw new Exception("Элемент не найден");
+            else
+            {
+                throw new Exception("Элемент не найден");
+            }
         }
     }
 }

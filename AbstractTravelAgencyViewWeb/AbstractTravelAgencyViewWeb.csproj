@@ -221,6 +221,10 @@
       <Project>{0AD73B55-01A2-43E8-A911-994FC2DBC167}</Project>
       <Name>AbstractTravelAgencyServiceDAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AbstractTravelAgencyServiceImplementDataBase\AbstractTravelAgencyServiceImplementDataBase.csproj">
+      <Project>{15c51fde-95cc-4d98-8445-f8accf37e5ef}</Project>
+      <Name>AbstractTravelAgencyServiceImplementDataBase</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AbstractTravelAgencyServiceImplement\AbstractTravelAgencyServiceImplement.csproj">
       <Project>{BE5D3E02-8AC8-47B4-9A44-C5859FD10DBC}</Project>
       <Name>AbstractTravelAgencyServiceImplement</Name>
